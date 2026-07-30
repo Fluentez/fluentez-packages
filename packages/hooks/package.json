@@ -1,10 +1,19 @@
 {
     "name": "@fluentez/hooks",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Enterprise React hooks for scroll management, state orchestration, and UI patterns",
     "main": "./dist/index.js",
     "module": "./dist/index.mjs",
     "types": "./dist/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Fluentez/fluentez-packages.git",
+        "directory": "packages/hooks"
+    },
+    "homepage": "https://github.com/Fluentez/fluentez-packages/tree/main/packages/hooks#readme",
+    "bugs": {
+        "url": "https://github.com/Fluentez/fluentez-packages/issues"
+    },
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
@@ -48,8 +57,8 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.21.0",
-        "typescript": "^5.3.3",
-        "tsup": "^8.0.2"
+        "tsup": "^8.0.2",
+        "typescript": "^5.3.3"
     },
     "keywords": [
         "fluentez",

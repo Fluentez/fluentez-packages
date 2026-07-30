@@ -6,6 +6,14 @@
     "packages/*"
   ],
   "description": "Ecosystem of modular libraries for modern web application development",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fluentez/fluentez-packages.git"
+  },
+  "homepage": "https://github.com/Fluentez/fluentez-packages#readme",
+  "bugs": {
+    "url": "https://github.com/Fluentez/fluentez-packages/issues"
+  },
   "scripts": {
     "build": "bun run --filter '*' build",
     "check-types": "bun run --filter '*' check-types",
