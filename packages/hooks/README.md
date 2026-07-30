@@ -2,6 +2,8 @@
 
 The `@fluentez/hooks` package provides specialized React hooks engineered for complex scrolling behavior, viewport state tracking, and state orchestration.
 
+Supports direct subpath imports for maximum tree-shaking performance.
+
 ## Installation
 
 ```bash
@@ -12,6 +14,21 @@ Peer Dependencies:
 - `react` >= 16.8.0
 - `react-dom` >= 16.8.0
 - `react-router-dom` >= 6.0.0 (Optional, required for `useScrollRestoration`)
+
+---
+
+## Subpath Imports Overview
+
+You can import hooks using root package imports or direct subpath exports:
+
+```typescript
+// Subpath import (Recommended for maximum tree-shaking)
+import { useScrollRestoration } from '@fluentez/hooks/use-scroll-restoration';
+import { useInfiniteScrollTop } from '@fluentez/hooks/use-infinite-scroll-top';
+
+// Root import
+import { useScrollRestoration, useInfiniteScrollTop } from '@fluentez/hooks';
+```
 
 ---
 
@@ -59,7 +76,7 @@ function useInfiniteScrollTop<T extends { _id?: string | number; id?: string | n
 
 ```tsx
 import React, { useRef, useState, useEffect } from 'react';
-import { useInfiniteScrollTop } from '@fluentez/hooks';
+import { useInfiniteScrollTop } from '@fluentez/hooks/use-infinite-scroll-top';
 
 interface ChatMessage {
   _id: string;
@@ -73,7 +90,6 @@ export function ChatFeedComponent() {
   const [totalPages, setTotalPages] = useState<number>(5);
   const [fetchedMessages, setFetchedMessages] = useState<ChatMessage[]>([]);
 
-  // Fetch historic messages when page changes
   useEffect(() => {
     async function loadHistoricMessages() {
       const response = await fetch(`/api/messages?page=${page}`);
@@ -145,7 +161,7 @@ function useScrollRestoration<T extends HTMLElement = HTMLDivElement>(
 
 ```tsx
 import React from 'react';
-import { useScrollRestoration } from '@fluentez/hooks';
+import { useScrollRestoration } from '@fluentez/hooks/use-scroll-restoration';
 
 export function DocumentFeedView() {
   const [isDataLoaded, setIsDataLoaded] = React.useState(true);
@@ -162,16 +178,7 @@ export function DocumentFeedView() {
       style={{ height: '100vh', overflowY: 'auto' }}
     >
       <h1>Document Feed</h1>
-      {/* Content items */}
     </div>
   );
 }
 ```
-
----
-
-## Technical Specifications
-
-1. Memory Overhead: Less than 2KB gzipped bundle size impact per hook.
-2. Debounce Rate: Scroll events are debounced at 100ms interval for session storage writes to guarantee maximum UI thread fluidity.
-3. DOM Synchronicity: Position restoration utilizes `useLayoutEffect` to avoid flickering during browser popstate events.

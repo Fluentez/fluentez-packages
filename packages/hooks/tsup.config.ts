@@ -1,7 +1,11 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  entry: ['src/index.ts'],
+  entry: {
+    index: 'src/index.ts',
+    'use-infinite-scroll-top': 'src/useInfiniteScrollTop.ts',
+    'use-scroll-restoration': 'src/useScrollRestoration.ts',
+  },
   format: ['cjs', 'esm'],
   dts: true,
   splitting: false,

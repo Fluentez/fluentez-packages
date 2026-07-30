@@ -10,6 +10,16 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
+    },
+    "./use-infinite-scroll-top": {
+      "types": "./dist/use-infinite-scroll-top.d.ts",
+      "import": "./dist/use-infinite-scroll-top.mjs",
+      "require": "./dist/use-infinite-scroll-top.js"
+    },
+    "./use-scroll-restoration": {
+      "types": "./dist/use-scroll-restoration.d.ts",
+      "import": "./dist/use-scroll-restoration.mjs",
+      "require": "./dist/use-scroll-restoration.js"
     }
   },
   "files": [
