@@ -53,7 +53,6 @@ yarn add @fluentez/hooks
 ## Package Quick Links & References
 
 - Package Documentation: [packages/hooks/README.md](file:///Volumes/KINGSTON/Developments/fluentez-packages/packages/hooks/README.md)
-- NPM Publishing Operations: [docs/PUBLISHING_GUIDE.md](file:///Volumes/KINGSTON/Developments/fluentez-packages/docs/PUBLISHING_GUIDE.md)
 
 ---
 
