@@ -13,16 +13,19 @@ Supports direct subpath imports for maximum tree-shaking performance.
 ## Installation
 
 npm:
+
 ```bash
 npm install @fluentez/hooks
 ```
 
 pnpm:
+
 ```bash
 pnpm add @fluentez/hooks
 ```
 
 bun:
+
 ```bash
 bun add @fluentez/hooks
 ```
@@ -54,34 +57,34 @@ import { useScrollRestoration, useInfiniteScrollTop } from '@fluentez/hooks';
 
 ```typescript
 function useInfiniteScrollTop<T extends { _id?: string | number; id?: string | number }>(
-  containerRef: RefObject<HTMLElement | null>,
-  totalPages: number,
-  page: number,
-  setPage: Dispatch<SetStateAction<number>>,
-  newData: T[],
-  shouldReverse?: boolean
+    containerRef: RefObject<HTMLElement | null>,
+    totalPages: number,
+    page: number,
+    setPage: Dispatch<SetStateAction<number>>,
+    newData: T[],
+    shouldReverse?: boolean
 ): {
-  data: T[];
-  setData: Dispatch<SetStateAction<T[]>>;
-}
+    data: T[];
+    setData: Dispatch<SetStateAction<T[]>>;
+};
 ```
 
 #### Parameters
 
-| Parameter | Type | Required | Default | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| `containerRef` | `RefObject<HTMLElement \| null>` | Yes | None | React ref attached to the scrollable overflow container element. |
-| `totalPages` | `number` | Yes | None | Total available page count returned from the backend API. |
-| `page` | `number` | Yes | None | Current active pagination page index. |
-| `setPage` | `Dispatch<SetStateAction<number>>` | Yes | None | React state setter function to increment current page index. |
-| `newData` | `T[]` | Yes | None | Array of newly fetched data items from API responses. |
-| `shouldReverse` | `boolean` | No | `false` | Set `true` if prepended historic data array items require reversing. |
+| Parameter       | Type                               | Required | Default | Description                                                          |
+| :-------------- | :--------------------------------- | :------- | :------ | :------------------------------------------------------------------- |
+| `containerRef`  | `RefObject<HTMLElement \| null>`   | Yes      | None    | React ref attached to the scrollable overflow container element.     |
+| `totalPages`    | `number`                           | Yes      | None    | Total available page count returned from the backend API.            |
+| `page`          | `number`                           | Yes      | None    | Current active pagination page index.                                |
+| `setPage`       | `Dispatch<SetStateAction<number>>` | Yes      | None    | React state setter function to increment current page index.         |
+| `newData`       | `T[]`                              | Yes      | None    | Array of newly fetched data items from API responses.                |
+| `shouldReverse` | `boolean`                          | No       | `false` | Set `true` if prepended historic data array items require reversing. |
 
 #### Return Values
 
-| Property | Type | Description |
-| :--- | :--- | :--- |
-| `data` | `T[]` | Combined dataset array containing deduplicated prepended items. |
+| Property  | Type                            | Description                                                       |
+| :-------- | :------------------------------ | :---------------------------------------------------------------- |
+| `data`    | `T[]`                           | Combined dataset array containing deduplicated prepended items.   |
 | `setData` | `Dispatch<SetStateAction<T[]>>` | Direct state dispatcher for updating internal message/item state. |
 
 #### Production Real-World Usage Example: Chat Application
@@ -91,100 +94,100 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useInfiniteScrollTop } from '@fluentez/hooks/use-infinite-scroll-top';
 
 interface Message {
-  _id: string;
-  sender: string;
-  text: string;
-  timestamp: string;
+    _id: string;
+    sender: string;
+    text: string;
+    timestamp: string;
 }
 
 export function RealtimeChatFeed() {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [page, setPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [fetchedMessages, setFetchedMessages] = useState<Message[]>([]);
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const [page, setPage] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(1);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [fetchedMessages, setFetchedMessages] = useState<Message[]>([]);
 
-  // Fetch paginated historic messages from backend
-  useEffect(() => {
-    let isMounted = true;
-    async function fetchMessageHistory() {
-      setLoading(true);
-      try {
-        const response = await fetch(`/api/chat/messages?page=${page}&limit=20`);
-        const result = await response.json();
-        if (isMounted) {
-          setFetchedMessages(result.messages);
-          setTotalPages(result.totalPages);
+    // Fetch paginated historic messages from backend
+    useEffect(() => {
+        let isMounted = true;
+        async function fetchMessageHistory() {
+            setLoading(true);
+            try {
+                const response = await fetch(`/api/chat/messages?page=${page}&limit=20`);
+                const result = await response.json();
+                if (isMounted) {
+                    setFetchedMessages(result.messages);
+                    setTotalPages(result.totalPages);
+                }
+            } catch (error) {
+                console.error('Failed to load message history:', error);
+            } finally {
+                if (isMounted) setLoading(false);
+            }
         }
-      } catch (error) {
-        console.error('Failed to load message history:', error);
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    }
 
-    fetchMessageHistory();
-    return () => {
-      isMounted = false;
-    };
-  }, [page]);
+        fetchMessageHistory();
+        return () => {
+            isMounted = false;
+        };
+    }, [page]);
 
-  // Bind hook to manage top-scroll offset recalculation
-  const { data: messages } = useInfiniteScrollTop<Message>(
-    containerRef,
-    totalPages,
-    page,
-    setPage,
-    fetchedMessages,
-    true // Reverse array order for historic API responses
-  );
+    // Bind hook to manage top-scroll offset recalculation
+    const { data: messages } = useInfiniteScrollTop<Message>(
+        containerRef,
+        totalPages,
+        page,
+        setPage,
+        fetchedMessages,
+        true // Reverse array order for historic API responses
+    );
 
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '500px',
-        maxWidth: '600px',
-        margin: '0 auto',
-        border: '1px solid #e0e0e0',
-        borderRadius: '8px',
-      }}
-    >
-      {/* Scrollable Container */}
-      <div
-        ref={containerRef}
-        style={{
-          flex: 1,
-          overflowY: 'auto',
-          padding: '16px',
-        }}
-      >
-        {loading && page > 1 && (
-          <div style={{ textAlign: 'center', padding: '8px', color: '#666' }}>
-            Loading older messages...
-          </div>
-        )}
-
-        {messages.map((msg) => (
-          <div
-            key={msg._id}
+    return (
+        <div
             style={{
-              margin: '8px 0',
-              padding: '10px 14px',
-              backgroundColor: '#f5f5f5',
-              borderRadius: '6px',
+                display: 'flex',
+                flexDirection: 'column',
+                height: '500px',
+                maxWidth: '600px',
+                margin: '0 auto',
+                border: '1px solid #e0e0e0',
+                borderRadius: '8px',
             }}
-          >
-            <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#333' }}>
-              {msg.sender} <span style={{ color: '#888' }}>{msg.timestamp}</span>
+        >
+            {/* Scrollable Container */}
+            <div
+                ref={containerRef}
+                style={{
+                    flex: 1,
+                    overflowY: 'auto',
+                    padding: '16px',
+                }}
+            >
+                {loading && page > 1 && (
+                    <div style={{ textAlign: 'center', padding: '8px', color: '#666' }}>
+                        Loading older messages...
+                    </div>
+                )}
+
+                {messages.map((msg) => (
+                    <div
+                        key={msg._id}
+                        style={{
+                            margin: '8px 0',
+                            padding: '10px 14px',
+                            backgroundColor: '#f5f5f5',
+                            borderRadius: '6px',
+                        }}
+                    >
+                        <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#333' }}>
+                            {msg.sender} <span style={{ color: '#888' }}>{msg.timestamp}</span>
+                        </div>
+                        <div style={{ fontSize: '14px', marginTop: '4px' }}>{msg.text}</div>
+                    </div>
+                ))}
             </div>
-            <div style={{ fontSize: '14px', marginTop: '4px' }}>{msg.text}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+        </div>
+    );
 }
 ```
 
@@ -198,27 +201,27 @@ export function RealtimeChatFeed() {
 
 ```typescript
 function useScrollRestoration<T extends HTMLElement = HTMLDivElement>(
-  key: string,
-  isReady?: boolean
+    key: string,
+    isReady?: boolean
 ): {
-  containerRef: RefObject<T | null>;
-  handleScroll: () => void;
-}
+    containerRef: RefObject<T | null>;
+    handleScroll: () => void;
+};
 ```
 
 #### Parameters
 
-| Parameter | Type | Required | Default | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| `key` | `string` | Yes | None | Unique key identifier for persisting scroll coordinates in `sessionStorage`. |
-| `isReady` | `boolean` | No | `true` | Set `false` until async dynamic content is rendered to prevent early scroll restored offsets. |
+| Parameter | Type      | Required | Default | Description                                                                                   |
+| :-------- | :-------- | :------- | :------ | :-------------------------------------------------------------------------------------------- |
+| `key`     | `string`  | Yes      | None    | Unique key identifier for persisting scroll coordinates in `sessionStorage`.                  |
+| `isReady` | `boolean` | No       | `true`  | Set `false` until async dynamic content is rendered to prevent early scroll restored offsets. |
 
 #### Return Values
 
-| Property | Type | Description |
-| :--- | :--- | :--- |
-| `containerRef` | `RefObject<T \| null>` | React ref to attach to the target overflow HTML element. |
-| `handleScroll` | `() => void` | Debounced scroll listener handler (100ms) to attach to container `onScroll`. |
+| Property       | Type                   | Description                                                                  |
+| :------------- | :--------------------- | :--------------------------------------------------------------------------- |
+| `containerRef` | `RefObject<T \| null>` | React ref to attach to the target overflow HTML element.                     |
+| `handleScroll` | `() => void`           | Debounced scroll listener handler (100ms) to attach to container `onScroll`. |
 
 #### Production Real-World Usage Example: Document Reader Feed with React Router
 
@@ -227,66 +230,66 @@ import React, { useState, useEffect } from 'react';
 import { useScrollRestoration } from '@fluentez/hooks/use-scroll-restoration';
 
 interface Article {
-  id: string;
-  title: string;
-  summary: string;
+    id: string;
+    title: string;
+    summary: string;
 }
 
 export function ArticleFeedView() {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [isReady, setIsReady] = useState<boolean>(false);
+    const [articles, setArticles] = useState<Article[]>([]);
+    const [isReady, setIsReady] = useState<boolean>(false);
 
-  // Bind scroll restoration hook with unique storage key
-  const { containerRef, handleScroll } = useScrollRestoration<HTMLDivElement>(
-    'article_feed_scroll_position',
-    isReady
-  );
+    // Bind scroll restoration hook with unique storage key
+    const { containerRef, handleScroll } = useScrollRestoration<HTMLDivElement>(
+        'article_feed_scroll_position',
+        isReady
+    );
 
-  // Fetch articles async
-  useEffect(() => {
-    async function loadArticles() {
-      const response = await fetch('/api/articles');
-      const data = await response.json();
-      setArticles(data);
-      // Flag ready after state updates and DOM render finish
-      setIsReady(true);
-    }
+    // Fetch articles async
+    useEffect(() => {
+        async function loadArticles() {
+            const response = await fetch('/api/articles');
+            const data = await response.json();
+            setArticles(data);
+            // Flag ready after state updates and DOM render finish
+            setIsReady(true);
+        }
 
-    loadArticles();
-  }, []);
+        loadArticles();
+    }, []);
 
-  return (
-    <div
-      ref={containerRef}
-      onScroll={handleScroll}
-      style={{
-        height: '100vh',
-        overflowY: 'auto',
-        padding: '24px',
-        backgroundColor: '#ffffff',
-      }}
-    >
-      <h2>Article Feed</h2>
-
-      {!isReady ? (
-        <div>Loading feed articles...</div>
-      ) : (
-        articles.map((article) => (
-          <article
-            key={article.id}
+    return (
+        <div
+            ref={containerRef}
+            onScroll={handleScroll}
             style={{
-              padding: '16px',
-              marginBottom: '16px',
-              borderBottom: '1px solid #eee',
+                height: '100vh',
+                overflowY: 'auto',
+                padding: '24px',
+                backgroundColor: '#ffffff',
             }}
-          >
-            <h3>{article.title}</h3>
-            <p>{article.summary}</p>
-          </article>
-        ))
-      )}
-    </div>
-  );
+        >
+            <h2>Article Feed</h2>
+
+            {!isReady ? (
+                <div>Loading feed articles...</div>
+            ) : (
+                articles.map((article) => (
+                    <article
+                        key={article.id}
+                        style={{
+                            padding: '16px',
+                            marginBottom: '16px',
+                            borderBottom: '1px solid #eee',
+                        }}
+                    >
+                        <h3>{article.title}</h3>
+                        <p>{article.summary}</p>
+                    </article>
+                ))
+            )}
+        </div>
+    );
 }
 ```
 

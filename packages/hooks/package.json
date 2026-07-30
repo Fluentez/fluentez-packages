@@ -1,62 +1,62 @@
 {
-  "name": "@fluentez/hooks",
-  "version": "1.0.1",
-  "description": "Enterprise React hooks for scroll management, state orchestration, and UI patterns",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+    "name": "@fluentez/hooks",
+    "version": "1.0.1",
+    "description": "Enterprise React hooks for scroll management, state orchestration, and UI patterns",
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.js"
+        },
+        "./use-infinite-scroll-top": {
+            "types": "./dist/use-infinite-scroll-top.d.ts",
+            "import": "./dist/use-infinite-scroll-top.mjs",
+            "require": "./dist/use-infinite-scroll-top.js"
+        },
+        "./use-scroll-restoration": {
+            "types": "./dist/use-scroll-restoration.d.ts",
+            "import": "./dist/use-scroll-restoration.mjs",
+            "require": "./dist/use-scroll-restoration.js"
+        }
     },
-    "./use-infinite-scroll-top": {
-      "types": "./dist/use-infinite-scroll-top.d.ts",
-      "import": "./dist/use-infinite-scroll-top.mjs",
-      "require": "./dist/use-infinite-scroll-top.js"
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsup",
+        "check-types": "tsc --noEmit",
+        "lint": "oxlint src",
+        "lint:fix": "oxlint src --fix",
+        "test": "bun test"
     },
-    "./use-scroll-restoration": {
-      "types": "./dist/use-scroll-restoration.d.ts",
-      "import": "./dist/use-scroll-restoration.mjs",
-      "require": "./dist/use-scroll-restoration.js"
-    }
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "tsup",
-    "check-types": "tsc --noEmit",
-    "lint": "oxlint src",
-    "lint:fix": "oxlint src --fix",
-    "test": "bun test"
-  },
-  "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
-    "react-router-dom": ">=6.0.0"
-  },
-  "peerDependenciesMeta": {
-    "react-router-dom": {
-      "optional": true
-    }
-  },
-  "devDependencies": {
-    "@types/bun": "latest",
-    "oxlint": "^0.15.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.0",
-    "typescript": "^5.3.3",
-    "tsup": "^8.0.2"
-  },
-  "keywords": [
-    "fluentez",
-    "react-hooks",
-    "scroll-restoration",
-    "infinite-scroll",
-    "react"
-  ],
-  "license": "MIT"
+    "peerDependencies": {
+        "react": ">=16.8.0",
+        "react-dom": ">=16.8.0",
+        "react-router-dom": ">=6.0.0"
+    },
+    "peerDependenciesMeta": {
+        "react-router-dom": {
+            "optional": true
+        }
+    },
+    "devDependencies": {
+        "@types/bun": "latest",
+        "oxlint": "^0.15.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.21.0",
+        "typescript": "^5.3.3",
+        "tsup": "^8.0.2"
+    },
+    "keywords": [
+        "fluentez",
+        "react-hooks",
+        "scroll-restoration",
+        "infinite-scroll",
+        "react"
+    ],
+    "license": "MIT"
 }
