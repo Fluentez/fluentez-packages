@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Lint source code
+        run: npm run lint
+
       - name: Verify TypeScript types
         run: npm run check-types
 
