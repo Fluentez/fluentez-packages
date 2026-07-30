@@ -1,0 +1,47 @@
+{
+  "name": "@fluentez/hooks",
+  "version": "1.0.0",
+  "description": "Enterprise React hooks for scroll management, state orchestration, and UI patterns",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "check-types": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "react-router-dom": ">=6.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react-router-dom": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.0",
+    "typescript": "^5.3.3",
+    "tsup": "^8.0.2"
+  },
+  "keywords": [
+    "fluentez",
+    "react-hooks",
+    "scroll-restoration",
+    "infinite-scroll",
+    "react"
+  ],
+  "license": "MIT"
+}
