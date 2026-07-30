@@ -1,0 +1,46 @@
+name: Publish Packages to NPM
+
+on:
+  push:
+    branches:
+      - main
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    name: Build & Publish Packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Verify TypeScript types
+        run: npm run check-types
+
+      - name: Build distribution packages
+        run: npm run build
+
+      - name: Publish @fluentez/hooks if version is updated
+        run: |
+          cd packages/hooks
+          LOCAL_VERSION=$(node -p "require('./package.json').version")
+          NPM_VERSION=$(npm view @fluentez/hooks version 2>/dev/null || echo "0.0.0")
+
+          if [ "$LOCAL_VERSION" != "$NPM_VERSION" ]; then
+            echo "Publishing @fluentez/hooks version $LOCAL_VERSION to NPM..."
+            npm publish --access public
+          else
+            echo "@fluentez/hooks version $LOCAL_VERSION is already published on NPM. Skipping publish."
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
