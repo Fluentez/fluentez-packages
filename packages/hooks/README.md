@@ -4,6 +4,17 @@ The `@fluentez/hooks` package provides specialized React hooks engineered for co
 
 Supports direct subpath imports for maximum tree-shaking performance.
 
+---
+
+## Quick Navigation Index
+
+| Hook                       | Subpath Import Path                       | Quick Direct Links                                                                                                                                                                  |
+| :------------------------- | :---------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`useInfiniteScrollTop`** | `@fluentez/hooks/use-infinite-scroll-top` | [Overview](#1-useinfinitescrolltop) \| [Parameters](#useinfinitescrolltop-parameters) \| [Returns](#useinfinitescrolltop-returns) \| [Usage Example](#useinfinitescrolltop-example) |
+| **`useScrollRestoration`** | `@fluentez/hooks/use-scroll-restoration`  | [Overview](#2-usescrollrestoration) \| [Parameters](#usescrollrestoration-parameters) \| [Returns](#usescrollrestoration-returns) \| [Usage Example](#usescrollrestoration-example) |
+
+---
+
 ## Prerequisites and Peer Dependencies
 
 - `react` >= 16.8.0
@@ -69,6 +80,8 @@ function useInfiniteScrollTop<T extends { _id?: string | number; id?: string | n
 };
 ```
 
+<a id="useinfinitescrolltop-parameters"></a>
+
 #### Parameters
 
 | Parameter       | Type                               | Required | Default | Description                                                          |
@@ -80,12 +93,16 @@ function useInfiniteScrollTop<T extends { _id?: string | number; id?: string | n
 | `newData`       | `T[]`                              | Yes      | None    | Array of newly fetched data items from API responses.                |
 | `shouldReverse` | `boolean`                          | No       | `false` | Set `true` if prepended historic data array items require reversing. |
 
+<a id="useinfinitescrolltop-returns"></a>
+
 #### Return Values
 
 | Property  | Type                            | Description                                                       |
 | :-------- | :------------------------------ | :---------------------------------------------------------------- |
 | `data`    | `T[]`                           | Combined dataset array containing deduplicated prepended items.   |
 | `setData` | `Dispatch<SetStateAction<T[]>>` | Direct state dispatcher for updating internal message/item state. |
+
+<a id="useinfinitescrolltop-example"></a>
 
 #### Production Real-World Usage Example: Chat Application
 
@@ -209,6 +226,8 @@ function useScrollRestoration<T extends HTMLElement = HTMLDivElement>(
 };
 ```
 
+<a id="usescrollrestoration-parameters"></a>
+
 #### Parameters
 
 | Parameter | Type      | Required | Default | Description                                                                                   |
@@ -216,12 +235,16 @@ function useScrollRestoration<T extends HTMLElement = HTMLDivElement>(
 | `key`     | `string`  | Yes      | None    | Unique key identifier for persisting scroll coordinates in `sessionStorage`.                  |
 | `isReady` | `boolean` | No       | `true`  | Set `false` until async dynamic content is rendered to prevent early scroll restored offsets. |
 
+<a id="usescrollrestoration-returns"></a>
+
 #### Return Values
 
 | Property       | Type                   | Description                                                                  |
 | :------------- | :--------------------- | :--------------------------------------------------------------------------- |
 | `containerRef` | `RefObject<T \| null>` | React ref to attach to the target overflow HTML element.                     |
 | `handleScroll` | `() => void`           | Debounced scroll listener handler (100ms) to attach to container `onScroll`. |
+
+<a id="usescrollrestoration-example"></a>
 
 #### Production Real-World Usage Example: Document Reader Feed with React Router
 
