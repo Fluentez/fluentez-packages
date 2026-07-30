@@ -15,23 +15,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js environment
+      - name: Setup Bun environment
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Lint source code
+        run: bun run lint
+
+      - name: Run unit tests
+        run: bun test
+
+      - name: Verify TypeScript types
+        run: bun run check-types
+
+      - name: Build distribution packages
+        run: bun run build
+
+      - name: Setup Node.js for npm publish authentication
         uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: 'https://registry.npmjs.org'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Lint source code
-        run: npm run lint
-
-      - name: Verify TypeScript types
-        run: npm run check-types
-
-      - name: Build distribution packages
-        run: npm run build
 
       - name: Publish @fluentez/hooks if version is updated
         run: |
