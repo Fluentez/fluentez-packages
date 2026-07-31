@@ -3,6 +3,7 @@
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    initThemeToggle();
     initRouter();
     initCopyButtons();
     initTabSwitchers();
@@ -11,24 +12,70 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   1. Client-Side Hash Router
+   1. Light / Dark Theme Management
+   ========================================================================== */
+function initThemeToggle() {
+    const themeToggleBtns = document.querySelectorAll('.theme-toggle-btn');
+
+    // 1. Determine initial theme: localStorage > system preference > default 'light'
+    const storedTheme = localStorage.getItem('bun-docs-theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = storedTheme || (prefersDark ? 'dark' : 'light');
+
+    setTheme(initialTheme, false);
+
+    // 2. Add click handlers to theme toggle buttons
+    themeToggleBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            const newTheme = isDark ? 'light' : 'dark';
+            setTheme(newTheme, true);
+        });
+    });
+}
+
+function setTheme(theme, withTransition) {
+    if (withTransition) {
+        document.body.classList.add('disable-transitions');
+    }
+
+    if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+
+    localStorage.setItem('bun-docs-theme', theme);
+
+    // Update icons on toggle buttons
+    document.querySelectorAll('.theme-toggle-btn').forEach((btn) => {
+        btn.innerHTML = theme === 'dark' ? '☀️' : '🌙';
+        btn.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+    });
+
+    if (withTransition) {
+        setTimeout(() => {
+            document.body.classList.remove('disable-transitions');
+        }, 100);
+    }
+}
+
+/* ==========================================================================
+   2. Client-Side Hash Router
    ========================================================================== */
 function initRouter() {
     function handleRoute() {
         const hash = window.location.hash || '#/overview';
         
-        // Clean hash format (support #/hooks/use-available-height or #use-available-height)
         let routeKey = hash.replace(/^#\/?/, '').replace(/^\//, '');
         if (!routeKey || routeKey === 'overview' || routeKey === 'docs') {
             routeKey = 'overview';
         }
 
-        // Deactivate all route views
         const views = document.querySelectorAll('.route-view');
         let matchedView = document.querySelector(`.route-view[data-route="${routeKey}"]`);
 
         if (!matchedView) {
-            // Fallback match by ID if data-route doesn't match directly
             matchedView = document.querySelector(`#${routeKey}`) || document.querySelector('.route-view[data-route="overview"]');
         }
 
@@ -37,22 +84,17 @@ function initRouter() {
             matchedView.classList.add('active');
         }
 
-        // Scroll page smoothly to top on route change
         window.scrollTo({ top: 0, behavior: 'instant' });
 
-        // Update active navigation links in sidebar & header
         updateActiveNavLinks(routeKey);
-
-        // Synchronize right-side Table of Contents (TOC) for active view
         updateTableOfContents(matchedView);
 
-        // Close mobile menu if open
         const sidebar = document.querySelector('#sidebar');
         if (sidebar) sidebar.classList.remove('open');
     }
 
     window.addEventListener('hashchange', handleRoute);
-    handleRoute(); // Execute initial route on load
+    handleRoute();
 }
 
 function updateActiveNavLinks(routeKey) {
@@ -93,7 +135,7 @@ function updateTableOfContents(activeView) {
 }
 
 /* ==========================================================================
-   2. Interactive Code Copy Button
+   3. Interactive Code Copy Button
    ========================================================================== */
 function initCopyButtons() {
     document.querySelectorAll('.copy-button').forEach((button) => {
@@ -130,7 +172,7 @@ function initCopyButtons() {
 }
 
 /* ==========================================================================
-   3. Package Manager Command Tab Switcher
+   4. Package Manager Command Tab Switcher
    ========================================================================== */
 function initTabSwitchers() {
     document.querySelectorAll('.tab').forEach((tab) => {
@@ -153,7 +195,7 @@ function initTabSwitchers() {
 }
 
 /* ==========================================================================
-   4. Search Modal (⌘K & Instant Search)
+   5. Search Modal (⌘K & Instant Search)
    ========================================================================== */
 function initSearchModal() {
     const modalOverlay = document.querySelector('#search-modal');
@@ -164,7 +206,6 @@ function initSearchModal() {
 
     if (!modalOverlay || !searchInput || !resultsContainer) return;
 
-    // Index all documentation route views for instant search
     const searchIndex = [
         { title: 'Overview & Getting Started', route: '#/overview', snippet: 'Welcome to @fluentez/hooks documentation and ecosystem overview.' },
         { title: 'Installation Guide', route: '#/installation', snippet: 'Install via npm, pnpm, bun, or yarn and subpath import instructions.' },
@@ -236,7 +277,7 @@ function initSearchModal() {
 }
 
 /* ==========================================================================
-   5. Mobile Drawer Navigation
+   6. Mobile Drawer Navigation
    ========================================================================== */
 function initMobileMenu() {
     const sidebar = document.querySelector('#sidebar');

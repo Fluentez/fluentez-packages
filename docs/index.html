@@ -28,6 +28,10 @@
                     <span class="search-shortcut">⌘K</span>
                 </button>
                 <a class="package-tag" href="#/installation">@fluentez/hooks <span>v1.0.4</span></a>
+                
+                <!-- Sun ☀️ / Moon 🌙 Theme Toggle Button -->
+                <button class="theme-toggle-btn" aria-label="Toggle dark/light theme">🌙</button>
+
                 <button class="menu-button" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">
                     Menu
                 </button>
@@ -105,20 +109,20 @@
                 <div class="section bordered">
                     <h2>Core Principles</h2>
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px;">
-                        <div style="padding: 16px; border: 1px solid var(--bun-border); border-radius: 8px; background: var(--bun-surface);">
-                            <div style="color: var(--bun-pink); font-family: var(--bun-font-mono); font-weight: 700; font-size: 12px;">01</div>
-                            <h3 style="margin: 10px 0 6px; font-size: 14px;">Tree-Shakable</h3>
-                            <p style="margin: 0; color: var(--bun-text-secondary); font-size: 12px;">Direct subpath imports ensure zero unused bytes in your bundle.</p>
+                        <div style="padding: 18px; border: 1px solid var(--bun-border); border-radius: 10px; background: var(--bun-surface);">
+                            <div style="color: var(--bun-pink); font-family: var(--bun-font-mono); font-weight: 700; font-size: 13px;">01</div>
+                            <h3 style="margin: 10px 0 6px; font-size: 16px;">Tree-Shakable</h3>
+                            <p style="margin: 0; color: var(--bun-text-secondary); font-size: 13.5px;">Direct subpath imports ensure zero unused bytes in your production bundle.</p>
                         </div>
-                        <div style="padding: 16px; border: 1px solid var(--bun-border); border-radius: 8px; background: var(--bun-surface);">
-                            <div style="color: var(--bun-pink); font-family: var(--bun-font-mono); font-weight: 700; font-size: 12px;">02</div>
-                            <h3 style="margin: 10px 0 6px; font-size: 14px;">O(1) Layout Calculations</h3>
-                            <p style="margin: 0; color: var(--bun-text-secondary); font-size: 12px;">Measured via ResizeObserver and useLayoutEffect before browser paint.</p>
+                        <div style="padding: 18px; border: 1px solid var(--bun-border); border-radius: 10px; background: var(--bun-surface);">
+                            <div style="color: var(--bun-pink); font-family: var(--bun-font-mono); font-weight: 700; font-size: 13px;">02</div>
+                            <h3 style="margin: 10px 0 6px; font-size: 16px;">O(1) Layout Calculations</h3>
+                            <p style="margin: 0; color: var(--bun-text-secondary); font-size: 13.5px;">Measured via ResizeObserver and useLayoutEffect before browser paint.</p>
                         </div>
-                        <div style="padding: 16px; border: 1px solid var(--bun-border); border-radius: 8px; background: var(--bun-surface);">
-                            <div style="color: var(--bun-pink); font-family: var(--bun-font-mono); font-weight: 700; font-size: 12px;">03</div>
-                            <h3 style="margin: 10px 0 6px; font-size: 14px;">Zero Dependencies</h3>
-                            <p style="margin: 0; color: var(--bun-text-secondary); font-size: 12px;">No extra runtime dependencies. Pure React primitive implementations.</p>
+                        <div style="padding: 18px; border: 1px solid var(--bun-border); border-radius: 10px; background: var(--bun-surface);">
+                            <div style="color: var(--bun-pink); font-family: var(--bun-font-mono); font-weight: 700; font-size: 13px;">03</div>
+                            <h3 style="margin: 10px 0 6px; font-size: 16px;">Zero Dependencies</h3>
+                            <p style="margin: 0; color: var(--bun-text-secondary); font-size: 13.5px;">No extra runtime dependencies. Pure React primitive implementations.</p>
                         </div>
                     </div>
                 </div>
@@ -470,16 +474,16 @@
                     <h1>Design Specifications</h1>
                     <p class="lede">Engineered to stay out of your way and deliver zero-flicker UI interactions.</p>
 
-                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 24px;">
-                        <div style="padding: 20px; border: 1px solid var(--bun-border); border-radius: 8px; background: var(--bun-surface);">
+                    <div style="display: flex; flex-direction: column; gap: 18px; margin-top: 24px;">
+                        <div style="padding: 22px; border: 1px solid var(--bun-border); border-radius: 10px; background: var(--bun-surface);">
                             <h3 style="margin: 0 0 8px; color: var(--bun-pink);">1. Layout Shift Prevention</h3>
                             <p style="margin: 0; color: var(--bun-text-secondary);">Uses <code>useLayoutEffect</code> to perform all DOM measurements and scroll coordinate adjustments synchronously before browser screen paint.</p>
                         </div>
-                        <div style="padding: 20px; border: 1px solid var(--bun-border); border-radius: 8px; background: var(--bun-surface);">
+                        <div style="padding: 22px; border: 1px solid var(--bun-border); border-radius: 10px; background: var(--bun-surface);">
                             <h3 style="margin: 0 0 8px; color: var(--bun-pink);">2. Debounced Storage Operations</h3>
                             <p style="margin: 0; color: var(--bun-text-secondary);">Scroll position writes to <code>sessionStorage</code> are debounced at 100ms to eliminate main thread blocking during active user scrolling.</p>
                         </div>
-                        <div style="padding: 20px; border: 1px solid var(--bun-border); border-radius: 8px; background: var(--bun-surface);">
+                        <div style="padding: 22px; border: 1px solid var(--bun-border); border-radius: 10px; background: var(--bun-surface);">
                             <h3 style="margin: 0 0 8px; color: var(--bun-pink);">3. O(1) ResizeObserver</h3>
                             <p style="margin: 0; color: var(--bun-text-secondary);"><code>useAvailableHeight</code> observes element and parent layout shifts with <code>ResizeObserver</code> and <code>requestAnimationFrame</code> without thread polling or loops.</p>
                         </div>
