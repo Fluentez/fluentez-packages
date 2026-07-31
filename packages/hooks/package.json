@@ -1,6 +1,6 @@
 {
     "name": "@fluentez/hooks",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Enterprise React hooks for scroll management, state orchestration, and UI patterns",
     "main": "./dist/index.js",
     "module": "./dist/index.mjs",

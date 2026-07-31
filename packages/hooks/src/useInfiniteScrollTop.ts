@@ -45,7 +45,11 @@ export function useInfiniteScrollTop<T extends { _id?: string | number; id?: str
         debounceTimer.current = setTimeout(() => {
             if (!containerRef.current) return;
 
-            const { scrollTop } = containerRef.current;
+            const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+
+            // Skip page increment if container lacks scrollable overflow content
+            if (scrollHeight <= clientHeight || scrollHeight === 0) return;
+
             const scrolledToTop = scrollTop <= 5;
 
             if (scrolledToTop) {
@@ -108,3 +112,5 @@ export function useInfiniteScrollTop<T extends { _id?: string | number; id?: str
 
     return { data, setData };
 }
+
+export default useInfiniteScrollTop;
