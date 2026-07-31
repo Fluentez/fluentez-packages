@@ -29,6 +29,11 @@
             "types": "./dist/use-scroll-restoration.d.ts",
             "import": "./dist/use-scroll-restoration.mjs",
             "require": "./dist/use-scroll-restoration.js"
+        },
+        "./use-available-height": {
+            "types": "./dist/use-available-height.d.ts",
+            "import": "./dist/use-available-height.mjs",
+            "require": "./dist/use-available-height.js"
         }
     },
     "files": [

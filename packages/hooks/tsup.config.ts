@@ -5,6 +5,7 @@ export default defineConfig({
         index: 'src/index.ts',
         'use-infinite-scroll-top': 'src/useInfiniteScrollTop.ts',
         'use-scroll-restoration': 'src/useScrollRestoration.ts',
+        'use-available-height': 'src/useAvailableHeight.ts',
     },
     format: ['cjs', 'esm'],
     dts: true,

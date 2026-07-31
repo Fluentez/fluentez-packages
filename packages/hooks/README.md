@@ -12,6 +12,7 @@ Supports direct subpath imports for maximum tree-shaking performance.
 | :------------------------- | :---------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`useInfiniteScrollTop`** | `@fluentez/hooks/use-infinite-scroll-top` | [Overview](#1-useinfinitescrolltop) \| [Parameters](#useinfinitescrolltop-parameters) \| [Returns](#useinfinitescrolltop-returns) \| [Usage Example](#useinfinitescrolltop-example) |
 | **`useScrollRestoration`** | `@fluentez/hooks/use-scroll-restoration`  | [Overview](#2-usescrollrestoration) \| [Parameters](#usescrollrestoration-parameters) \| [Returns](#usescrollrestoration-returns) \| [Usage Example](#usescrollrestoration-example) |
+| **`useAvailableHeight`**   | `@fluentez/hooks/use-available-height`   | [Overview](#3-useavailableheight) \| [Parameters](#useavailableheight-parameters) \| [Returns](#useavailableheight-returns) \| [Usage Example](#useavailableheight-example)     |
 
 ---
 
@@ -51,9 +52,10 @@ You can import hooks using root package imports or direct subpath exports:
 // Subpath import (Recommended for maximum tree-shaking)
 import { useScrollRestoration } from '@fluentez/hooks/use-scroll-restoration';
 import { useInfiniteScrollTop } from '@fluentez/hooks/use-infinite-scroll-top';
+import { useAvailableHeight } from '@fluentez/hooks/use-available-height';
 
 // Barrel import
-import { useScrollRestoration, useInfiniteScrollTop } from '@fluentez/hooks';
+import { useScrollRestoration, useInfiniteScrollTop, useAvailableHeight } from '@fluentez/hooks';
 ```
 
 ---
@@ -318,8 +320,76 @@ export function ArticleFeedView() {
 
 ---
 
+### 3. useAvailableHeight
+
+`useAvailableHeight` dynamically computes the available vertical height for a container element by measuring the inner client height of its parent element minus the total offset height of its previous sibling (such as a header, top navigation bar, or toolbar). It uses `useLayoutEffect` and `ResizeObserver` for zero-flicker $O(1)$ calculations that update smoothly on viewport and element resize events.
+
+#### Function Signature
+
+```typescript
+function useAvailableHeight<T extends HTMLElement = HTMLDivElement>(
+    fallbackHeight?: string
+): {
+    ref: RefObject<T | null>;
+    height: string;
+};
+```
+
+<a id="useavailableheight-parameters"></a>
+
+#### Parameters
+
+| Parameter        | Type     | Required | Default  | Description                                                                                      |
+| :--------------- | :------- | :------- | :------- | :----------------------------------------------------------------------------------------------- |
+| `fallbackHeight` | `string` | No       | `'100%'` | Initial fallback CSS height string applied before DOM measurement completes (e.g., `'100%'`). |
+
+<a id="useavailableheight-returns"></a>
+
+#### Return Values
+
+| Property | Type                   | Description                                                                                       |
+| :------- | :--------------------- | :------------------------------------------------------------------------------------------------ |
+| `ref`    | `RefObject<T \| null>` | React ref attached to the container element to be height-adjusted.                                |
+| `height` | `string`               | Computed CSS pixel height string (e.g., `'782px'`) dynamically calculated from DOM dimensions.   |
+
+<a id="useavailableheight-example"></a>
+
+#### Production Real-World Usage Example: Dynamic Chat Interface Layout
+
+```tsx
+import React from 'react';
+import { useAvailableHeight } from '@fluentez/hooks/use-available-height';
+
+export function ChatLayoutView() {
+    // Dynamically calculate available space below header/navbar without hardcoding pixels or REMs
+    const { ref: containerRef, height } = useAvailableHeight<HTMLDivElement>();
+
+    return (
+        <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+            {/* Header / Navbar */}
+            <header style={{ height: '60px', backgroundColor: '#333', color: '#fff' }}>
+                Header Navigation
+            </header>
+
+            {/* Container automatically fills 100% of remaining vertical height */}
+            <div ref={containerRef} style={{ height, display: 'flex', overflow: 'hidden' }}>
+                <aside style={{ width: '250px', borderRight: '1px solid #ccc' }}>
+                    Sidebar Menu
+                </aside>
+                <main style={{ flex: 1, padding: '16px', overflowY: 'auto' }}>
+                    Main Chat Messages Content
+                </main>
+            </div>
+        </div>
+    );
+}
+```
+
+---
+
 ## Performance and Technical Design Specifications
 
 1. **Debounced Storage Operations**: Scroll events are debounced at 100ms before writing to `sessionStorage` to eliminate main thread blocking during continuous scrolling.
 2. **Layout Shift Prevention**: Scroll position restoration relies on `useLayoutEffect` to apply vertical scroll offsets before browser paint, preventing visual flicker during page popstate events.
 3. **Automatic Deduplication**: `useInfiniteScrollTop` uses `Set` hashing based on item `_id` or `id` keys to prevent duplicate items when prepending data arrays.
+4. **Zero-Flicker Layout Height Observer**: `useAvailableHeight` utilizes `useLayoutEffect` alongside `ResizeObserver` and `requestAnimationFrame` for $O(1)$ layout calculation, adjusting height synchronously before screen paint without main thread layout thrashing.

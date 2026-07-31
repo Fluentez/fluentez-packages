@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Official documentation for @fluentez/hooks — High-performance React hooks for UI & state management." />
+        <title>Fluentez — React Hooks Documentation</title>
+        <link rel="stylesheet" href="./styles.css" />
+    </head>
+    <body>
+        <a class="skip-link" href="#content">Skip to content</a>
+
+        <!-- Top Navigation Header (Bun.com Style) -->
+        <header class="topbar">
+            <a class="brand" href="#/overview" aria-label="Fluentez documentation home">
+                <span class="brand-mark">F</span>
+                <span>Fluentez</span>
+            </a>
+            <nav class="header-nav" aria-label="Global navigation">
+                <a href="#/overview">Docs</a>
+                <a href="#/ecosystem">Packages</a>
+                <a href="https://github.com/Fluentez/fluentez-packages" target="_blank" rel="noreferrer">GitHub ↗</a>
+            </nav>
+
+            <div class="topbar-actions">
+                <button class="search-trigger" aria-label="Search documentation">
+                    <span>Search docs...</span>
+                    <span class="search-shortcut">⌘K</span>
+                </button>
+                <a class="package-tag" href="#/installation">@fluentez/hooks <span>v1.0.4</span></a>
+                <button class="menu-button" id="menu-toggle" aria-controls="sidebar" aria-expanded="false">
+                    Menu
+                </button>
+            </div>
+        </header>
+
+        <!-- Left Navigation Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div style="margin-bottom: 16px;">
+                <button class="search-trigger" style="width: 100%; justify-content: space-between;">
+                    <span>Search docs...</span>
+                    <span class="search-shortcut">/</span>
+                </button>
+            </div>
+
+            <nav aria-label="Documentation navigation">
+                <div class="nav-group">
+                    <p class="nav-label">Get started</p>
+                    <a class="nav-link" href="#/overview">Overview</a>
+                    <a class="nav-link" href="#/installation">Installation</a>
+                    <a class="nav-link" href="#/imports">Importing hooks</a>
+                    <a class="nav-link" href="#/ecosystem">Ecosystem</a>
+                </div>
+
+                <div class="nav-group">
+                    <p class="nav-label">Hooks</p>
+                    <a class="nav-link" href="#/hooks/use-infinite-scroll-top">
+                        <span>useInfiniteScrollTop</span><small>01</small>
+                    </a>
+                    <a class="nav-link" href="#/hooks/use-scroll-restoration">
+                        <span>useScrollRestoration</span><small>02</small>
+                    </a>
+                    <a class="nav-link" href="#/hooks/use-available-height">
+                        <span>useAvailableHeight</span><small>03</small>
+                    </a>
+                </div>
+
+                <div class="nav-group">
+                    <p class="nav-label">Reference</p>
+                    <a class="nav-link" href="#/requirements">Requirements</a>
+                    <a class="nav-link" href="#/design">Design & Architecture</a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span> Production ready v1.0.4
+            </div>
+        </aside>
+
+        <!-- Right Table of Contents (On this page) -->
+        <aside class="toc" aria-label="On this page">
+            <p class="toc-title">On this page</p>
+            <div class="toc-links" id="toc-links">
+                <!-- Dynamically generated TOC links -->
+            </div>
+        </aside>
+
+        <!-- Main Content (Route Views SPA Router) -->
+        <main id="content">
+
+            <!-- ROUTE 1: OVERVIEW -->
+            <section class="route-view active" data-route="overview">
+                <div class="section">
+                    <p class="eyebrow">Get started</p>
+                    <h1>Welcome to Fluentez</h1>
+                    <p class="lede">
+                        Fluentez is an ecosystem of high-performance, TypeScript-first libraries designed for modern web applications. Start building faster with enterprise React hooks.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="button primary" href="#/installation">Get started <span>→</span></a>
+                        <a class="button ghost" href="#/hooks/use-available-height">Explore hooks</a>
+                    </div>
+                </div>
+
+                <div class="section bordered">
+                    <h2>Core Principles</h2>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px;">
+                        <div style="padding: 16px; border: 1px solid var(--bun-border); border-radius: 8px; background: var(--bun-surface);">
+                            <div style="color: var(--bun-pink); font-family: var(--bun-font-mono); font-weight: 700; font-size: 12px;">01</div>
+                            <h3 style="margin: 10px 0 6px; font-size: 14px;">Tree-Shakable</h3>
+                            <p style="margin: 0; color: var(--bun-text-secondary); font-size: 12px;">Direct subpath imports ensure zero unused bytes in your bundle.</p>
+                        </div>
+                        <div style="padding: 16px; border: 1px solid var(--bun-border); border-radius: 8px; background: var(--bun-surface);">
+                            <div style="color: var(--bun-pink); font-family: var(--bun-font-mono); font-weight: 700; font-size: 12px;">02</div>
+                            <h3 style="margin: 10px 0 6px; font-size: 14px;">O(1) Layout Calculations</h3>
+                            <p style="margin: 0; color: var(--bun-text-secondary); font-size: 12px;">Measured via ResizeObserver and useLayoutEffect before browser paint.</p>
+                        </div>
+                        <div style="padding: 16px; border: 1px solid var(--bun-border); border-radius: 8px; background: var(--bun-surface);">
+                            <div style="color: var(--bun-pink); font-family: var(--bun-font-mono); font-weight: 700; font-size: 12px;">03</div>
+                            <h3 style="margin: 10px 0 6px; font-size: 14px;">Zero Dependencies</h3>
+                            <p style="margin: 0; color: var(--bun-text-secondary); font-size: 12px;">No extra runtime dependencies. Pure React primitive implementations.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-nav">
+                    <a class="page-nav-card next" href="#/installation">
+                        <span class="page-nav-label">Next page</span>
+                        <span class="page-nav-title">Installation & Setup →</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ROUTE 2: INSTALLATION -->
+            <section class="route-view" data-route="installation">
+                <div class="section bordered">
+                    <p class="eyebrow">Getting started</p>
+                    <h1>Install the Package</h1>
+                    <p class="lede">Choose your favorite package manager to install <code>@fluentez/hooks</code>.</p>
+
+                    <div class="tabs" role="tablist" aria-label="Package managers">
+                        <button class="tab active" role="tab" aria-selected="true" data-command="npm install @fluentez/hooks">npm</button>
+                        <button class="tab" role="tab" aria-selected="false" data-command="pnpm add @fluentez/hooks">pnpm</button>
+                        <button class="tab" role="tab" aria-selected="false" data-command="bun add @fluentez/hooks">bun</button>
+                        <button class="tab" role="tab" aria-selected="false" data-command="yarn add @fluentez/hooks">yarn</button>
+                    </div>
+                    <pre class="code-block"><code><span class="code-prompt">$</span> <span id="install-command">npm install @fluentez/hooks</span></code><button class="copy-button" aria-label="Copy installation command">Copy</button></pre>
+                </div>
+
+                <div class="page-nav">
+                    <a class="page-nav-card" href="#/overview">
+                        <span class="page-nav-label">Previous page</span>
+                        <span class="page-nav-title">← Overview</span>
+                    </a>
+                    <a class="page-nav-card next" href="#/imports">
+                        <span class="page-nav-label">Next page</span>
+                        <span class="page-nav-title">Importing Hooks →</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ROUTE 3: IMPORTS -->
+            <section class="route-view" data-route="imports">
+                <div class="section bordered">
+                    <p class="eyebrow">Usage</p>
+                    <h1>Importing Hooks</h1>
+                    <p class="lede">For the smallest possible bundle size, use direct subpath imports.</p>
+
+                    <pre class="code-block"><code><span class="comment">// Recommended — direct subpath imports (Maximum tree-shaking)</span>
+<span class="keyword">import</span> { useAvailableHeight } <span class="keyword">from</span> <span class="string">'@fluentez/hooks/use-available-height'</span>;
+<span class="keyword">import</span> { useScrollRestoration } <span class="keyword">from</span> <span class="string">'@fluentez/hooks/use-scroll-restoration'</span>;
+
+<span class="comment">// Barrel import</span>
+<span class="keyword">import</span> { useAvailableHeight, useScrollRestoration } <span class="keyword">from</span> <span class="string">'@fluentez/hooks'</span>;</code><button class="copy-button" aria-label="Copy import code">Copy</button></pre>
+                </div>
+
+                <div class="page-nav">
+                    <a class="page-nav-card" href="#/installation">
+                        <span class="page-nav-label">Previous page</span>
+                        <span class="page-nav-title">← Installation</span>
+                    </a>
+                    <a class="page-nav-card next" href="#/hooks/use-infinite-scroll-top">
+                        <span class="page-nav-label">Next page</span>
+                        <span class="page-nav-title">useInfiniteScrollTop →</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ROUTE 4: HOOK — useInfiniteScrollTop -->
+            <section class="route-view" data-route="hooks/use-infinite-scroll-top">
+                <div class="section bordered">
+                    <p class="eyebrow">Hook 01</p>
+                    <h1>useInfiniteScrollTop</h1>
+                    <p class="lede">
+                        Prevents reverse scroll position jumps when prepending historical data batches to reverse timelines like chat applications and log feeds.
+                    </p>
+
+                    <div class="callout">
+                        <span class="callout-icon">✦</span>
+                        <p>Automatically calculates vertical layout offsets via <code>requestAnimationFrame</code> to keep user scroll focus locked smoothly on active items.</p>
+                    </div>
+
+                    <h2>Function Signature</h2>
+                    <pre class="code-block"><code><span class="keyword">function</span> <span class="function">useInfiniteScrollTop</span>&lt;<span class="type">T</span>&gt;(
+  containerRef: <span class="type">RefObject&lt;HTMLElement | null&gt;</span>,
+  totalPages: <span class="type">number</span>,
+  page: <span class="type">number</span>,
+  setPage: <span class="type">Dispatch&lt;SetStateAction&lt;number&gt;&gt;</span>,
+  newData: <span class="type">T[]</span>,
+  shouldReverse?: <span class="type">boolean</span>
+): { data: <span class="type">T[]</span>; setData: <span class="type">Dispatch&lt;SetStateAction&lt;T[]&gt;&gt;</span> }</code><button class="copy-button">Copy</button></pre>
+
+                    <h2>Parameters</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>containerRef</code></td><td><code>RefObject&lt;HTMLElement&gt;</code></td><td>Ref attached to the scrollable overflow container element.</td></tr>
+                                <tr><td><code>totalPages</code></td><td><code>number</code></td><td>Total available page count from backend API.</td></tr>
+                                <tr><td><code>page</code> / <code>setPage</code></td><td><code>state</code></td><td>Current active page index and React state setter.</td></tr>
+                                <tr><td><code>newData</code></td><td><code>T[]</code></td><td>Newly fetched items array. Deduplicated by <code>_id</code> or <code>id</code>.</td></tr>
+                                <tr><td><code>shouldReverse</code></td><td><code>boolean</code></td><td>Optional. Reverses each incoming batch array. Default <code>false</code>.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2>Example Usage</h2>
+                    <pre class="code-block"><code><span class="keyword">const</span> { data: messages } = <span class="function">useInfiniteScrollTop</span>(
+  containerRef, totalPages, page, setPage, fetchedMessages, <span class="boolean">true</span>
+);
+
+<span class="keyword">return</span> (
+  &lt;<span class="tag">div</span> ref={containerRef} style={{ overflowY: <span class="string">'auto'</span> }}&gt;
+    {messages.map((msg) =&gt; &lt;<span class="tag">Message</span> key={msg._id} {...msg} /&gt;)}
+  &lt;/<span class="tag">div</span>&gt;
+);</code><button class="copy-button">Copy</button></pre>
+                </div>
+
+                <div class="page-nav">
+                    <a class="page-nav-card" href="#/imports">
+                        <span class="page-nav-label">Previous page</span>
+                        <span class="page-nav-title">← Importing Hooks</span>
+                    </a>
+                    <a class="page-nav-card next" href="#/hooks/use-scroll-restoration">
+                        <span class="page-nav-label">Next page</span>
+                        <span class="page-nav-title">useScrollRestoration →</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ROUTE 5: HOOK — useScrollRestoration -->
+            <section class="route-view" data-route="hooks/use-scroll-restoration">
+                <div class="section bordered">
+                    <p class="eyebrow">Hook 02</p>
+                    <h1>useScrollRestoration</h1>
+                    <p class="lede">
+                        Persists and restores scroll coordinates on overflow HTML elements across client-side router navigation events (POP vs PUSH).
+                    </p>
+
+                    <div class="callout">
+                        <span class="callout-icon">↗</span>
+                        <p>Works seamlessly with <code>react-router-dom</code>. Automatically handles session storage persistence.</p>
+                    </div>
+
+                    <h2>Function Signature</h2>
+                    <pre class="code-block"><code><span class="keyword">function</span> <span class="function">useScrollRestoration</span>&lt;<span class="type">T extends HTMLElement = HTMLDivElement</span>&gt;(
+  key: <span class="type">string</span>,
+  isReady: <span class="type">boolean</span> = <span class="boolean">true</span>
+): { containerRef: <span class="type">RefObject&lt;T | null&gt;</span>; handleScroll: () =&gt; <span class="type">void</span> }</code><button class="copy-button">Copy</button></pre>
+
+                    <h2>Parameters</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>key</code></td><td><code>string</code></td><td>Unique key identifier for persisting scroll coordinates in <code>sessionStorage</code>.</td></tr>
+                                <tr><td><code>isReady</code></td><td><code>boolean</code></td><td>Set <code>false</code> until dynamic content finishes rendering. Default <code>true</code>.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2>Example Usage</h2>
+                    <pre class="code-block"><code><span class="keyword">const</span> { containerRef, handleScroll } = <span class="function">useScrollRestoration</span>(
+  <span class="string">'article-feed-scroll'</span>,
+  articles.length &gt; <span class="number">0</span>
+);
+
+<span class="keyword">return</span> (
+  &lt;<span class="tag">main</span> ref={containerRef} onScroll={handleScroll} style={{ overflowY: <span class="string">'auto'</span> }}&gt;
+    {articles.map((article) =&gt; &lt;<span class="tag">ArticleCard</span> key={article.id} {...article} /&gt;)}
+  &lt;/<span class="tag">main</span>&gt;
+);</code><button class="copy-button">Copy</button></pre>
+                </div>
+
+                <div class="page-nav">
+                    <a class="page-nav-card" href="#/hooks/use-infinite-scroll-top">
+                        <span class="page-nav-label">Previous page</span>
+                        <span class="page-nav-title">← useInfiniteScrollTop</span>
+                    </a>
+                    <a class="page-nav-card next" href="#/hooks/use-available-height">
+                        <span class="page-nav-label">Next page</span>
+                        <span class="page-nav-title">useAvailableHeight →</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ROUTE 6: HOOK — useAvailableHeight -->
+            <section class="route-view" data-route="hooks/use-available-height">
+                <div class="section bordered">
+                    <p class="eyebrow">Hook 03</p>
+                    <h1>useAvailableHeight</h1>
+                    <p class="lede">
+                        Dynamically computes the available vertical height for a container element by measuring its parent client height minus its previous sibling height in O(1).
+                    </p>
+
+                    <div class="callout">
+                        <span class="callout-icon">⚡</span>
+                        <p>Zero-flicker calculation using <code>useLayoutEffect</code> and <code>ResizeObserver</code> before browser paint. No hardcoded pixels or REMs required.</p>
+                    </div>
+
+                    <h2>Function Signature</h2>
+                    <pre class="code-block"><code><span class="keyword">function</span> <span class="function">useAvailableHeight</span>&lt;<span class="type">T extends HTMLElement = HTMLDivElement</span>&gt;(
+  fallbackHeight: <span class="type">string</span> = <span class="string">'100%'</span>
+): { ref: <span class="type">RefObject&lt;T | null&gt;</span>; height: <span class="type">string</span> }</code><button class="copy-button">Copy</button></pre>
+
+                    <h2>Parameters</h2>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>fallbackHeight</code></td><td><code>string</code></td><td>Optional initial fallback CSS height string before DOM measurement. Default <code>'100%'</code>.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2>Example Usage</h2>
+                    <pre class="code-block"><code><span class="keyword">import</span> { useAvailableHeight } <span class="keyword">from</span> <span class="string">'@fluentez/hooks/use-available-height'</span>;
+
+<span class="keyword">export function</span> <span class="function">MessengerView</span>() {
+  <span class="keyword">const</span> { ref, height } = <span class="function">useAvailableHeight</span>();
+
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">div</span> className=<span class="string">"app-layout"</span> style={{ height: <span class="string">'100vh'</span> }}&gt;
+      &lt;<span class="tag">header</span>&gt;Navbar Navigation&lt;/<span class="tag">header</span>&gt;
+      &lt;<span class="tag">main</span> ref={ref} style={{ height, overflow: <span class="string">'hidden'</span> }}&gt;
+        &lt;<span class="tag">ChatContent</span> /&gt;
+      &lt;/<span class="tag">main</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}</code><button class="copy-button">Copy</button></pre>
+                </div>
+
+                <div class="page-nav">
+                    <a class="page-nav-card" href="#/hooks/use-scroll-restoration">
+                        <span class="page-nav-label">Previous page</span>
+                        <span class="page-nav-title">← useScrollRestoration</span>
+                    </a>
+                    <a class="page-nav-card next" href="#/ecosystem">
+                        <span class="page-nav-label">Next page</span>
+                        <span class="page-nav-title">Ecosystem →</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ROUTE 7: ECOSYSTEM -->
+            <section class="route-view" data-route="ecosystem">
+                <div class="section bordered">
+                    <p class="eyebrow">Fluentez Ecosystem</p>
+                    <h1>Package Registry</h1>
+                    <p class="lede">Explore modular packages engineered for modern Web Application development.</p>
+
+                    <div class="package-grid">
+                        <a class="package-card available" href="#/hooks/use-available-height">
+                            <div class="package-card-top">
+                                <code>@fluentez/hooks</code>
+                                <span class="badge active-badge">v1.0.4 Active</span>
+                            </div>
+                            <p>High-performance React hooks for UI scrolling, viewport calculations, and state orchestration.</p>
+                            <div class="package-meta">
+                                <span>React 16.8+</span>
+                                <span>TypeScript</span>
+                            </div>
+                            <span class="package-open">View documentation <b>→</b></span>
+                        </a>
+
+                        <div class="package-card upcoming">
+                            <div class="package-card-top">
+                                <code>@fluentez/ui</code>
+                                <span class="badge">Upcoming</span>
+                            </div>
+                            <p>Accessible headless UI component primitives and dynamic layout containers.</p>
+                            <div class="package-meta"><span>v0.1.0 Roadmap</span><span>React</span></div>
+                        </div>
+
+                        <div class="package-card upcoming">
+                            <div class="package-card-top">
+                                <code>@fluentez/utils</code>
+                                <span class="badge">Upcoming</span>
+                            </div>
+                            <p>High-performance utility functions, debouncing, throttling, and DOM math.</p>
+                            <div class="package-meta"><span>v0.1.0 Roadmap</span><span>TypeScript</span></div>
+                        </div>
+
+                        <div class="package-card upcoming">
+                            <div class="package-card-top">
+                                <code>@fluentez/icons</code>
+                                <span class="badge">Upcoming</span>
+                            </div>
+                            <p>Lightweight SVG vector icon library with React component bindings.</p>
+                            <div class="package-meta"><span>v0.1.0 Roadmap</span><span>React</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-nav">
+                    <a class="page-nav-card" href="#/hooks/use-available-height">
+                        <span class="page-nav-label">Previous page</span>
+                        <span class="page-nav-title">← useAvailableHeight</span>
+                    </a>
+                    <a class="page-nav-card next" href="#/requirements">
+                        <span class="page-nav-label">Next page</span>
+                        <span class="page-nav-title">Requirements →</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ROUTE 8: REQUIREMENTS -->
+            <section class="route-view" data-route="requirements">
+                <div class="section bordered">
+                    <p class="eyebrow">Compatibility</p>
+                    <h1>Requirements & Dependencies</h1>
+                    <p class="lede">Minimum version prerequisites for using <code>@fluentez/hooks</code>.</p>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Package</th><th>Version</th><th>Notes</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>react</code></td><td>≥ 16.8.0</td><td>Required for React Hooks support.</td></tr>
+                                <tr><td><code>react-dom</code></td><td>≥ 16.8.0</td><td>Required for DOM layout rendering.</td></tr>
+                                <tr><td><code>react-router-dom</code></td><td>≥ 6.0.0</td><td>Optional peer dependency (only required for <code>useScrollRestoration</code>).</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="page-nav">
+                    <a class="page-nav-card" href="#/ecosystem">
+                        <span class="page-nav-label">Previous page</span>
+                        <span class="page-nav-title">← Ecosystem</span>
+                    </a>
+                    <a class="page-nav-card next" href="#/design">
+                        <span class="page-nav-label">Next page</span>
+                        <span class="page-nav-title">Design & Architecture →</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ROUTE 9: DESIGN -->
+            <section class="route-view" data-route="design">
+                <div class="section bordered">
+                    <p class="eyebrow">Architecture</p>
+                    <h1>Design Specifications</h1>
+                    <p class="lede">Engineered to stay out of your way and deliver zero-flicker UI interactions.</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 24px;">
+                        <div style="padding: 20px; border: 1px solid var(--bun-border); border-radius: 8px; background: var(--bun-surface);">
+                            <h3 style="margin: 0 0 8px; color: var(--bun-pink);">1. Layout Shift Prevention</h3>
+                            <p style="margin: 0; color: var(--bun-text-secondary);">Uses <code>useLayoutEffect</code> to perform all DOM measurements and scroll coordinate adjustments synchronously before browser screen paint.</p>
+                        </div>
+                        <div style="padding: 20px; border: 1px solid var(--bun-border); border-radius: 8px; background: var(--bun-surface);">
+                            <h3 style="margin: 0 0 8px; color: var(--bun-pink);">2. Debounced Storage Operations</h3>
+                            <p style="margin: 0; color: var(--bun-text-secondary);">Scroll position writes to <code>sessionStorage</code> are debounced at 100ms to eliminate main thread blocking during active user scrolling.</p>
+                        </div>
+                        <div style="padding: 20px; border: 1px solid var(--bun-border); border-radius: 8px; background: var(--bun-surface);">
+                            <h3 style="margin: 0 0 8px; color: var(--bun-pink);">3. O(1) ResizeObserver</h3>
+                            <p style="margin: 0; color: var(--bun-text-secondary);"><code>useAvailableHeight</code> observes element and parent layout shifts with <code>ResizeObserver</code> and <code>requestAnimationFrame</code> without thread polling or loops.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-nav">
+                    <a class="page-nav-card" href="#/requirements">
+                        <span class="page-nav-label">Previous page</span>
+                        <span class="page-nav-title">← Requirements</span>
+                    </a>
+                    <a class="page-nav-card next" href="#/overview">
+                        <span class="page-nav-label">Next page</span>
+                        <span class="page-nav-title">Overview →</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- FOOTER -->
+            <footer>
+                <a class="brand" href="#/overview">
+                    <span class="brand-mark">F</span>
+                    <span>Fluentez</span>
+                </a>
+                <span>MIT License · Built with Bun & React</span>
+            </footer>
+        </main>
+
+        <!-- Search Modal (⌘K Command Palette) -->
+        <div class="search-modal-overlay" id="search-modal">
+            <div class="search-modal">
+                <div class="search-modal-header">
+                    <input type="text" class="search-modal-input" id="modal-search-input" placeholder="Search documentation..." autocomplete="off" />
+                    <button id="modal-search-close" style="background: none; border: none; font-size: 18px; cursor: pointer; color: var(--bun-text-muted);">✕</button>
+                </div>
+                <div class="search-modal-results" id="modal-search-results">
+                    <!-- Search results populated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <script src="./script.js"></script>
+    </body>
+</html>
