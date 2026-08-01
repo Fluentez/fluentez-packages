@@ -233,16 +233,15 @@ export function createSkeleton(
         el.style.visibility = originalVisibility;
       }
 
-      // Restore position if modified
-      if (computedPosition === 'static') {
-        targetElement.style.position = originalPosition;
-      }
-
       // Fade out overlay
       overlay.style.opacity = '0';
       setTimeout(() => {
         if (overlay.parentNode) {
           overlay.parentNode.removeChild(overlay);
+        }
+        // Restore position only after overlay fade-out completes to avoid top layout jumps
+        if (computedPosition === 'static') {
+          targetElement.style.position = originalPosition;
         }
       }, fadeDuration);
 
