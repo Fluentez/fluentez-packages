@@ -1,6 +1,6 @@
 {
   "name": "@fluentez/ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Zero-dependency 100% matching UI skeleton generator for Vanilla JS and React",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

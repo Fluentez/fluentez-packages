@@ -142,7 +142,7 @@ Generates a skeleton overlay on the target element.
 | Option | Type | Default | Allowed Values & Description |
 | :--- | :--- | :--- | :--- |
 | `animation` | `'shimmer' \| 'pulse' \| 'wave' \| 'none'` | `'shimmer'` | Animation effect style for skeleton blocks. |
-| `theme` | `'auto' \| 'light' \| 'dark' \| { background?, skeleton?, highlight? }` | `'auto'` | Color mode or custom CSS color palette object. |
+| `theme` | `'auto' \| 'light' \| 'dark' \| { skeleton?, highlight?, background? }` | `'auto'` | Color theme or custom object: `skeleton` (or `background`) sets base block color, `highlight` sets shimmer light streak color. |
 | `borderRadius` | `'auto' \| number \| string` | `'auto'` | Border radius resolution mode (`'auto'`, number pixels, or CSS string). |
 | `exclude` | `string \| ((el: HTMLElement) => boolean)` | `undefined` | Selector or predicate matching elements to skip completely. |
 | `keep` | `string \| ((el: HTMLElement) => boolean)` | `undefined` | Selector or predicate matching elements to remain visible as-is. |

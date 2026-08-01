@@ -168,8 +168,9 @@ export function createSkeleton(
       overlay.setAttribute('data-theme', options.theme);
     }
   } else if (typeof options.theme === 'object' && options.theme !== null) {
-    if (options.theme.background) {
-      overlay.style.setProperty('--fluentez-skel-bg', options.theme.background);
+    const baseBg = options.theme.skeleton || options.theme.background;
+    if (baseBg) {
+      overlay.style.setProperty('--fluentez-skel-bg', baseBg);
     }
     if (options.theme.highlight) {
       overlay.style.setProperty('--fluentez-skel-highlight', options.theme.highlight);
