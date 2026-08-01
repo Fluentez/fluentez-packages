@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 /* ==========================================================================
    Fluentez Documentation — Bun.com Design System Theme (Light & Dark)
    Tokens matched with Bun.com (bun.com/docs):
-   - Primary Accent: Bun Pink (#ff73a8)
+   - Typography: Inter 400 (16px / 28px line-height)
+   - Primary Accent: Bun Pink (#ff73a8) & Ambient Purple Top Glow
    - Light & Dark theme CSS variables
-   - Upgraded typography scale (16px base font size for maximum legibility)
-   - Tree-shakable SPA Hash Router with dedicated pages
    ========================================================================== */
 
 :root {
@@ -21,15 +22,15 @@
     --bun-border-subtle: #f0eef0;
 
     --bun-text-main: #1e1a1b;
-    --bun-text-secondary: #464243;
+    --bun-text-secondary: #524d4f;
     --bun-text-muted: #777375;
     --bun-text-light: #a6a2a3;
 
     --bun-code-bg: #141214;
     --bun-code-text: #f6f6f6;
-    --bun-topbar-bg: rgba(255, 255, 255, 0.92);
+    --bun-topbar-bg: rgba(255, 255, 255, 0.85);
 
-    --bun-font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    --bun-font-sans: 'Inter', -apple-system, "system-ui", "Segoe UI", system-ui, sans-serif;
     --bun-font-mono: ui-monospace, "SF Mono", Monaco, Consolas, "Liberation Mono", monospace;
 
     --sidebar-width: 285px;
@@ -49,13 +50,13 @@ html.dark {
     --bun-border-subtle: #201c1f;
 
     --bun-text-main: #fdfcfd;
-    --bun-text-secondary: #d1cdcf;
-    --bun-text-muted: #9a9497;
+    --bun-text-secondary: #a6a2a3;
+    --bun-text-muted: #8e888b;
     --bun-text-light: #6e676a;
 
     --bun-code-bg: #090709;
     --bun-code-text: #f6f6f6;
-    --bun-topbar-bg: rgba(14, 11, 14, 0.92);
+    --bun-topbar-bg: rgba(14, 11, 14, 0.85);
 }
 
 /* Disable transitions temporarily during theme toggle to prevent color delay lag */
@@ -79,10 +80,33 @@ body {
     color: var(--bun-text-main);
     font-family: var(--bun-font-sans);
     font-size: 16px;
-    /* Matched to Bun.com 16px base font size */
-    line-height: 1.75;
+    line-height: 28px;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ambient Purple & Pink Top Glow Effect (Bun.com Style) */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    max-width: 1300px;
+    height: 480px;
+    background: radial-gradient(
+        ellipse 75% 55% at 50% 0%,
+        rgba(168, 85, 247, 0.22) 0%,
+        rgba(236, 72, 153, 0.15) 45%,
+        rgba(255, 115, 168, 0.04) 75%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(55px);
+    opacity: 0.92;
 }
 
 /* Accessibility */
@@ -198,8 +222,8 @@ html.dark .brand-mark {
 .search-trigger {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 7px 14px;
+    gap: 8px;
+    padding: 7px 12px;
     background: var(--bun-subtle-bg);
     border: 1px solid var(--bun-border);
     border-radius: 8px;
@@ -207,12 +231,24 @@ html.dark .brand-mark {
     font-size: 13.5px;
     cursor: pointer;
     transition: all 0.15s ease;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.search-icon {
+    flex-shrink: 0;
+    opacity: 0.7;
 }
 
 .search-trigger:hover {
     border-color: var(--bun-pink-border);
     background: var(--bun-surface);
     color: var(--bun-text-secondary);
+}
+
+.search-trigger:hover .search-icon {
+    opacity: 1;
+    color: var(--bun-pink);
 }
 
 .search-shortcut {
@@ -225,9 +261,10 @@ html.dark .brand-mark {
     color: var(--bun-text-muted);
     font-family: var(--bun-font-mono);
     font-size: 11px;
+    margin-left: 4px;
 }
 
-/* Theme Toggle Button (Sun ☀️ / Moon 🌙) */
+/* Theme Toggle Button (Sun / Moon SVG) */
 .theme-toggle-btn {
     display: inline-flex;
     align-items: center;
@@ -235,18 +272,27 @@ html.dark .brand-mark {
     width: 36px;
     height: 36px;
     background: var(--bun-subtle-bg);
-    border: none;
+    border: 1px solid var(--bun-border);
     border-radius: 8px;
-    color: var(--bun-text-main);
+    color: var(--bun-text-secondary);
     cursor: pointer;
-    font-size: 16px;
     transition: all 0.15s ease;
+    flex-shrink: 0;
 }
 
 .theme-toggle-btn:hover {
     border-color: var(--bun-pink-border);
     background: var(--bun-pink-light);
     color: var(--bun-pink);
+}
+
+.theme-icon {
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.theme-toggle-btn:hover .theme-icon {
+    transform: rotate(15deg);
 }
 
 .package-tag {
@@ -403,18 +449,21 @@ html.dark .brand-mark {
 .toc-link {
     color: var(--bun-text-secondary);
     font-size: 13px;
-    /* Upgraded font size */
     text-decoration: none;
-    transition: color 0.15s ease;
+    transition: all 0.2s ease;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    padding-left: 4px;
+    border-left: 2px solid transparent;
 }
 
 .toc-link:hover,
 .toc-link.active {
     color: var(--bun-pink);
     font-weight: 600;
+    border-left-color: var(--bun-pink);
+    padding-left: 8px;
 }
 
 /* ==========================================================================
@@ -694,8 +743,9 @@ h3 {
 table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 14px;
-    /* Upgraded 14px table font size */
+    font-family: var(--bun-font-sans);
+    font-size: 14.5px;
+    line-height: 1.65;
     text-align: left;
 }
 
@@ -703,11 +753,11 @@ th {
     padding: 14px 18px;
     background: var(--bun-subtle-bg);
     color: var(--bun-text-muted);
-    font-family: var(--bun-font-mono);
-    font-size: 12px;
-    font-weight: 700;
+    font-family: var(--bun-font-sans);
+    font-size: 12.5px;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     border-bottom: 1px solid var(--bun-border);
 }
 
@@ -715,6 +765,7 @@ td {
     padding: 14px 18px;
     border-bottom: 1px solid var(--bun-border-subtle);
     color: var(--bun-text-secondary);
+    font-family: var(--bun-font-sans);
     vertical-align: top;
 }
 
@@ -723,13 +774,14 @@ tbody tr:last-child td {
 }
 
 td code {
-    padding: 3px 8px;
+    padding: 2px 7px;
     background: var(--bun-subtle-bg);
     border: 1px solid var(--bun-border);
     border-radius: 5px;
-    color: var(--bun-text-main);
+    color: var(--bun-text-secondary);
     font-family: var(--bun-font-mono);
     font-size: 13px;
+    font-weight: 600;
 }
 
 /* Package Grid Cards */
@@ -1012,7 +1064,43 @@ footer {
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
+    .topbar .search-shortcut {
+        display: none;
+    }
+
+    .topbar-actions {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 520px) {
+    .topbar {
+        padding: 0 14px;
+    }
+
+    .topbar .search-trigger {
+        padding: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .topbar .search-trigger .search-label {
+        display: none;
+    }
+
+    .topbar .search-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .topbar-actions {
+        gap: 8px;
+    }
+
     .package-tag {
         display: none;
     }
@@ -1024,4 +1112,10 @@ footer {
     .hero-actions {
         flex-direction: column;
     }
+}
+
+@keyframes skelPulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
 }

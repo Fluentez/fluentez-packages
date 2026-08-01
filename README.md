@@ -8,7 +8,8 @@ The Fluentez ecosystem is partitioned into modular TypeScript packages published
 
 | Package | Version | Status | Description | Target |
 | :--- | :--- | :--- | :--- | :--- |
-| `@fluentez/hooks` | 1.0.0 | Active | High-performance React hooks for UI and state control | React 16.8+ |
+| `@fluentez/hooks` | 1.0.7 | Active | Enterprise React hooks for UI, scroll management, and state | React 16.8+ |
+| `@fluentez/ui` | 1.0.0 | Active | Zero-dependency 100% matching UI skeleton screen generator | Vanilla JS / React |
 | `@fluentez/core` | Planned | Roadmap | Ecosystem core foundations and context configuration | Universal |
 | `@fluentez/utils` | Planned | Roadmap | Functional helpers, throttling, and debouncing algorithms | Universal |
 | `@fluentez/dom` | Planned | Roadmap | DOM viewport computation and bounding element math | Web DOM |
@@ -52,7 +53,8 @@ yarn add @fluentez/hooks
 
 ## Package Quick Links & References
 
-- Package Documentation: [packages/hooks/README.md](file:///Volumes/KINGSTON/Developments/fluentez-packages/packages/hooks/README.md)
+- `@fluentez/hooks` Documentation: [packages/hooks/README.md](file:///Volumes/KINGSTON/Developments/fluentez-packages/packages/hooks/README.md)
+- `@fluentez/ui` Documentation: [packages/ui/README.md](file:///Volumes/KINGSTON/Developments/fluentez-packages/packages/ui/README.md)
 
 ---
 

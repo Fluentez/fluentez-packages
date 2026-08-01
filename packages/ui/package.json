@@ -1,0 +1,78 @@
+{
+  "name": "@fluentez/ui",
+  "version": "1.0.0",
+  "description": "Zero-dependency 100% matching UI skeleton generator for Vanilla JS and React",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fluentez/fluentez-packages.git",
+    "directory": "packages/ui"
+  },
+  "homepage": "https://fluentez.github.io/fluentez-packages/",
+  "bugs": {
+    "url": "https://github.com/Fluentez/fluentez-packages/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.mjs",
+      "require": "./dist/react.js"
+    },
+    "./vanilla": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "check-types": "tsc --noEmit",
+    "lint": "oxlint src",
+    "lint:fix": "oxlint src --fix",
+    "test": "bun test"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "oxlint": "^0.15.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [
+    "fluentez",
+    "skeleton",
+    "boneyard",
+    "ui",
+    "skeleton-generator",
+    "loader",
+    "placeholder",
+    "react"
+  ],
+  "license": "MIT"
+}

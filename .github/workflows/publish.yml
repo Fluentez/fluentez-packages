@@ -63,3 +63,26 @@ jobs:
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @fluentez/ui if version is updated
+        run: |
+          cd packages/ui
+          SHOULD_PUBLISH=$(node -e "
+            const localVer = require('./package.json').version.trim();
+            const { execSync } = require('child_process');
+            try {
+              const npmVer = execSync('npm view @fluentez/ui version', { encoding: 'utf8' }).trim();
+              console.log(localVer !== npmVer ? 'true' : 'false');
+            } catch (e) {
+              console.log('true');
+            }
+          ")
+
+          if [ "$SHOULD_PUBLISH" = "true" ]; then
+            echo "Publishing new version of @fluentez/ui to NPM..."
+            npm publish --access public
+          else
+            echo "@fluentez/ui version is already published on NPM. Skipping publish."
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

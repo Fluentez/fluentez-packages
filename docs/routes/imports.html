@@ -1,0 +1,27 @@
+<section class="route-view active" data-route="imports">
+    <div class="section">
+        <p class="eyebrow">Usage</p>
+        <h1>Importing Hooks & Components</h1>
+        <p class="lede">For the smallest possible bundle size, use direct subpath imports.</p>
+
+        <pre class="code-block"><code><span class="comment">// Recommended — direct subpath imports (Maximum tree-shaking)</span>
+<span class="keyword">import</span> { useAvailableHeight } <span class="keyword">from</span> <span class="string">'@fluentez/hooks/use-available-height'</span>;
+<span class="keyword">import</span> { useScrollRestoration } <span class="keyword">from</span> <span class="string">'@fluentez/hooks/use-scroll-restoration'</span>;
+<span class="keyword">import</span> { createSkeleton } <span class="keyword">from</span> <span class="string">'@fluentez/ui'</span>;
+<span class="keyword">import</span> { SkeletonContainer } <span class="keyword">from</span> <span class="string">'@fluentez/ui/react'</span>;
+
+<span class="comment">// Barrel imports</span>
+<span class="keyword">import</span> { useAvailableHeight, useScrollRestoration } <span class="keyword">from</span> <span class="string">'@fluentez/hooks'</span>;</code><button class="copy-button" aria-label="Copy import code">Copy</button></pre>
+    </div>
+
+    <div class="page-nav">
+        <a class="page-nav-card" href="#/installation">
+            <span class="page-nav-label">Previous page</span>
+            <span class="page-nav-title">← Installation</span>
+        </a>
+        <a class="page-nav-card next" href="#/hooks/use-infinite-scroll-top">
+            <span class="page-nav-label">Next page</span>
+            <span class="page-nav-title">useInfiniteScrollTop →</span>
+        </a>
+    </div>
+</section>

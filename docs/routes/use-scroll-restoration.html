@@ -1,0 +1,140 @@
+<section class="route-view active" data-route="hooks/use-scroll-restoration">
+    <div class="section">
+        <p class="eyebrow">Hook 02</p>
+        <h1>useScrollRestoration</h1>
+        <p class="lede">
+            Persists and restores scroll coordinates on overflow HTML elements across client-side router
+            navigation events (POP vs PUSH).
+        </p>
+
+        <div class="callout">
+            <span class="callout-icon">↗</span>
+            <p>Works seamlessly with <code>react-router-dom</code>. Automatically handles session storage persistence.</p>
+        </div>
+
+        <h2 id="usescrollrestoration-signature">Function Signature</h2>
+        <pre class="code-block"><code><span class="keyword">function</span> <span class="function">useScrollRestoration</span>&lt;<span class="type">T extends HTMLElement = HTMLDivElement</span>&gt;(
+  key: <span class="type">string</span>,
+  isReady?: <span class="type">boolean</span>
+): {
+  containerRef: <span class="type">RefObject&lt;T | null&gt;</span>;
+  handleScroll: () =&gt; <span class="type">void</span>;
+};</code><button class="copy-button">Copy</button></pre>
+
+        <h2 id="usescrollrestoration-parameters">Parameters</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>key</code></td>
+                        <td><code>string</code></td>
+                        <td>Yes</td>
+                        <td>None</td>
+                        <td>Unique key identifier for persisting scroll coordinates in <code>sessionStorage</code>.</td>
+                    </tr>
+                    <tr>
+                        <td><code>isReady</code></td>
+                        <td><code>boolean</code></td>
+                        <td>No</td>
+                        <td><code>true</code></td>
+                        <td>Set <code>false</code> until dynamic content finishes rendering to prevent early scroll restoration offsets.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 id="usescrollrestoration-returns">Return Values</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>containerRef</code></td>
+                        <td><code>RefObject&lt;T | null&gt;</code></td>
+                        <td>React ref to attach to the target overflow HTML element.</td>
+                    </tr>
+                    <tr>
+                        <td><code>handleScroll</code></td>
+                        <td><code>() => void</code></td>
+                        <td>Debounced scroll listener handler (100ms) to attach to container <code>onScroll</code>.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 id="usescrollrestoration-example">Production Usage Example: Article Feed</h2>
+        <pre class="code-block"><code><span class="keyword">import</span> React, { useState, useEffect } <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> { useScrollRestoration } <span class="keyword">from</span> <span class="string">'@fluentez/hooks/use-scroll-restoration'</span>;
+
+<span class="keyword">interface</span> <span class="type">Article</span> {
+  id: <span class="type">string</span>;
+  title: <span class="type">string</span>;
+  summary: <span class="type">string</span>;
+}
+
+<span class="keyword">export function</span> <span class="function">ArticleFeedView</span>() {
+  <span class="keyword">const</span> [articles, setArticles] = <span class="function">useState</span>&lt;<span class="type">Article[]</span>&gt;([]);
+  <span class="keyword">const</span> [isReady, setIsReady] = <span class="function">useState</span>&lt;<span class="type">boolean</span>&gt;(<span class="boolean">false</span>);
+
+  <span class="comment">// Bind scroll restoration hook with unique storage key</span>
+  <span class="keyword">const</span> { containerRef, handleScroll } = <span class="function">useScrollRestoration</span>&lt;<span class="type">HTMLDivElement</span>&gt;(
+    <span class="string">'article_feed_scroll_position'</span>,
+    isReady
+  );
+
+  <span class="function">useEffect</span>(() =&gt; {
+    <span class="function">fetch</span>(<span class="string">'/api/articles'</span>)
+      .<span class="function">then</span>((res) =&gt; res.<span class="function">json</span>())
+      .<span class="function">then</span>((data) =&gt; {
+        setArticles(data);
+        setIsReady(<span class="boolean">true</span>); <span class="comment">// Flag ready after state updates and DOM render finish</span>
+      });
+  }, []);
+
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">div</span>
+      ref={containerRef}
+      onScroll={handleScroll}
+      style={{ height: <span class="string">'100vh'</span>, overflowY: <span class="string">'auto'</span> }}
+    &gt;
+      {!isReady ? (
+        &lt;<span class="tag">div</span>&gt;Loading feed articles...&lt;/<span class="tag">div</span>&gt;
+      ) : (
+        articles.map((article) =&gt; (
+          &lt;<span class="tag">article</span> key={article.id} className=<span class="string">"feed-card"</span>&gt;
+            &lt;<span class="tag">h3</span>&gt;{article.title}&lt;/<span class="tag">h3</span>&gt;
+            &lt;<span class="tag">p</span>&gt;{article.summary}&lt;/<span class="tag">p</span>&gt;
+          &lt;/<span class="tag">article</span>&gt;
+        ))
+      )}
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}</code><button class="copy-button">Copy</button></pre>
+    </div>
+
+    <div class="page-nav">
+        <a class="page-nav-card" href="#/hooks/use-infinite-scroll-top">
+            <span class="page-nav-label">Previous page</span>
+            <span class="page-nav-title">← useInfiniteScrollTop</span>
+        </a>
+        <a class="page-nav-card next" href="#/hooks/use-available-height">
+            <span class="page-nav-label">Next page</span>
+            <span class="page-nav-title">useAvailableHeight →</span>
+        </a>
+    </div>
+</section>

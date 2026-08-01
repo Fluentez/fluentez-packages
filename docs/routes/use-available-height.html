@@ -1,0 +1,109 @@
+<section class="route-view active" data-route="hooks/use-available-height">
+    <div class="section">
+        <p class="eyebrow">Hook 03</p>
+        <h1>useAvailableHeight</h1>
+        <p class="lede">
+            Dynamically computes the available vertical height for a container element by measuring its parent
+            client height minus its previous sibling height in O(1).
+        </p>
+
+        <div class="callout">
+            <span class="callout-icon">⚡</span>
+            <p>Zero-flicker calculation using <code>useLayoutEffect</code> and <code>ResizeObserver</code>
+                before browser paint. No hardcoded pixels or REMs required.</p>
+        </div>
+
+        <h2 id="useavailableheight-signature">Function Signature</h2>
+        <pre class="code-block"><code><span class="keyword">function</span> <span class="function">useAvailableHeight</span>&lt;<span class="type">T extends HTMLElement = HTMLDivElement</span>&gt;(
+  fallbackHeight?: <span class="type">string</span>
+): {
+  ref: <span class="type">RefObject&lt;T | null&gt;</span>;
+  height: <span class="type">string</span>;
+};</code><button class="copy-button">Copy</button></pre>
+
+        <h2 id="useavailableheight-parameters">Parameters</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>fallbackHeight</code></td>
+                        <td><code>string</code></td>
+                        <td>No</td>
+                        <td><code>'100%'</code></td>
+                        <td>Initial fallback CSS height string applied before DOM measurement completes.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 id="useavailableheight-returns">Return Values</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>ref</code></td>
+                        <td><code>RefObject&lt;T | null&gt;</code></td>
+                        <td>React ref attached to the container element to be height-adjusted.</td>
+                    </tr>
+                    <tr>
+                        <td><code>height</code></td>
+                        <td><code>string</code></td>
+                        <td>Computed CSS pixel height string (e.g., <code>'782px'</code>) dynamically calculated from DOM dimensions.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 id="useavailableheight-example">Production Usage Example: Dynamic Messenger Layout</h2>
+        <pre class="code-block"><code><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> { useAvailableHeight } <span class="keyword">from</span> <span class="string">'@fluentez/hooks/use-available-height'</span>;
+
+<span class="keyword">export function</span> <span class="function">MessengerView</span>() {
+  <span class="comment">// Dynamically calculate available space below header/navbar without hardcoding pixels</span>
+  <span class="keyword">const</span> { ref, height } = <span class="function">useAvailableHeight</span>&lt;<span class="type">HTMLDivElement</span>&gt;();
+
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">div</span> className=<span class="string">"app-layout"</span> style={{ height: <span class="string">'100vh'</span>, display: <span class="string">'flex'</span>, flexDirection: <span class="string">'column'</span> }}&gt;
+      &lt;<span class="tag">header</span> style={{ height: <span class="string">'60px'</span>, background: <span class="string">'#1e293b'</span>, color: <span class="string">'#fff'</span> }}&gt;
+        Navbar Navigation
+      &lt;/<span class="tag">header</span>&gt;
+      &lt;<span class="tag">main</span> ref={ref} style={{ height, display: <span class="string">'flex'</span>, overflow: <span class="string">'hidden'</span> }}&gt;
+        &lt;<span class="tag">aside</span> style={{ width: <span class="string">'280px'</span>, borderRight: <span class="string">'1px solid #cbd5e1'</span> }}&gt;
+          Sidebar Conversations
+        &lt;/<span class="tag">aside</span>&gt;
+        &lt;<span class="tag">section</span> style={{ flex: <span class="number">1</span>, overflowY: <span class="string">'auto'</span> }}&gt;
+          Active Chat Stream Content
+        &lt;/<span class="tag">section</span>&gt;
+      &lt;/<span class="tag">main</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}</code><button class="copy-button">Copy</button></pre>
+    </div>
+
+    <div class="page-nav">
+        <a class="page-nav-card" href="#/hooks/use-scroll-restoration">
+            <span class="page-nav-label">Previous page</span>
+            <span class="page-nav-title">← useScrollRestoration</span>
+        </a>
+        <a class="page-nav-card next" href="#/ui-skeleton">
+            <span class="page-nav-label">Next page</span>
+            <span class="page-nav-title">@fluentez/ui Skeleton →</span>
+        </a>
+    </div>
+</section>

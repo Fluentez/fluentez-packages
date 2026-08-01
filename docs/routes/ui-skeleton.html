@@ -1,0 +1,288 @@
+<section class="route-view active" data-route="ui-skeleton">
+    <div class="section">
+        <div class="breadcrumb">
+            <a href="#/overview">Docs</a> / <span>UI Libraries</span> / <span>@fluentez/ui Skeleton</span>
+        </div>
+        <h1 class="page-title">@fluentez/ui Skeleton Screen Generator</h1>
+        <p class="page-description">Zero-dependency, 100% geometry-matching skeleton placeholder generator for Vanilla JS & React applications.</p>
+
+        <div class="hero-box" style="margin-top: 24px; padding: 24px; border: 1px solid var(--bun-border); border-radius: 12px; background: var(--bun-surface);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="margin: 0; font-size: 18px; color: var(--bun-text);">Live Interactive Demo</h3>
+                <button id="btn-toggle-demo-skeleton" class="tab-button active" style="padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                    Toggle Skeleton Overlay
+                </button>
+            </div>
+
+            <!-- Target Demo Card -->
+            <div id="demo-skeleton-card" style="padding: 20px; border: 1px solid var(--bun-border); border-radius: 12px; background: var(--bun-bg); max-width: 450px;">
+                <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 16px;">
+                    <div style="width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #ec4899, #8b5cf6); flex-shrink: 0;" data-demo-avatar></div>
+                    <div>
+                        <h4 style="margin: 0 0 4px; font-size: 16px; color: var(--bun-text);">Alex Rivera</h4>
+                        <p style="margin: 0; font-size: 13px; color: var(--bun-text-secondary);">Senior Frontend Engineer</p>
+                    </div>
+                </div>
+                <p style="margin: 0 0 16px; font-size: 14px; color: var(--bun-text); line-height: 1.5;">
+                    Fluentez UI skeleton generator reads computed styles and layout dimensions dynamically from real DOM elements to construct seamless placeholder overlays.
+                </p>
+                <div style="display: flex; gap: 10px;">
+                    <button style="padding: 6px 14px; border-radius: 6px; background: var(--bun-pink); color: #fff; border: none; font-weight: 600; font-size: 13px;">Follow</button>
+                    <button style="padding: 6px 14px; border-radius: 6px; background: var(--bun-surface); color: var(--bun-text); border: 1px solid var(--bun-border); font-size: 13px;">Message</button>
+                </div>
+            </div>
+        </div>
+
+        <h2 id="ui-installation" class="section-title">Installation</h2>
+        <div class="tabs" role="tablist" aria-label="Package managers">
+            <button class="tab active" role="tab" aria-selected="true" data-command="bun add @fluentez/ui">bun</button>
+            <button class="tab" role="tab" aria-selected="false" data-command="npm install @fluentez/ui">npm</button>
+            <button class="tab" role="tab" aria-selected="false" data-command="pnpm add @fluentez/ui">pnpm</button>
+        </div>
+        <pre class="code-block"><code><span class="code-prompt">$</span> <span id="install-command">bun add @fluentez/ui</span></code><button class="copy-button" aria-label="Copy installation command">Copy</button></pre>
+
+        <h2 id="ui-function-signature" class="section-title">Function Signature</h2>
+        <pre class="code-block"><code><span class="keyword">function</span> <span class="function">createSkeleton</span>(
+  target: <span class="type">HTMLElement | string</span>,
+  options?: <span class="type">SkeletonOptions</span>
+): <span class="type">SkeletonController</span>;
+
+<span class="comment">// Alias</span>
+<span class="keyword">const</span> skeletonize = createSkeleton;</code><button class="copy-button">Copy</button></pre>
+
+        <h2 id="ui-parameters" class="section-title">Configuration Options (SkeletonOptions)</h2>
+        <p class="lede">Every aspect of skeleton generation can be customized via the <code>options</code> parameter object:</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Allowed Values & Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>animation</code></td>
+                        <td><code>AnimationType</code></td>
+                        <td><code>'shimmer'</code></td>
+                        <td><code>'shimmer'</code> | <code>'pulse'</code> | <code>'wave'</code> | <code>'none'</code>.<br/>Controls the animation effect applied to generated skeleton blocks.</td>
+                    </tr>
+                    <tr>
+                        <td><code>theme</code></td>
+                        <td><code>ThemeMode</code></td>
+                        <td><code>'auto'</code></td>
+                        <td><code>'auto'</code> | <code>'light'</code> | <code>'dark'</code> | <code>{ background?, skeleton?, highlight? }</code>.<br/>Color mode or custom CSS color object.</td>
+                    </tr>
+                    <tr>
+                        <td><code>borderRadius</code></td>
+                        <td><code>string | number | 'auto'</code></td>
+                        <td><code>'auto'</code></td>
+                        <td><code>'auto'</code> (reads computed style) | numeric pixels (e.g. <code>8</code>) | CSS string (e.g. <code>'50%'</code>).</td>
+                    </tr>
+                    <tr>
+                        <td><code>exclude</code></td>
+                        <td><code>string | ((el: HTMLElement) => boolean)</code></td>
+                        <td><code>undefined</code></td>
+                        <td>CSS query selector string (e.g. <code>'.skip-me'</code>) or predicate function. Matched elements are ignored completely.</td>
+                    </tr>
+                    <tr>
+                        <td><code>keep</code></td>
+                        <td><code>string | ((el: HTMLElement) => boolean)</code></td>
+                        <td><code>undefined</code></td>
+                        <td>CSS query selector string or predicate function. Matched elements remain visible as-is inside the overlay.</td>
+                    </tr>
+                    <tr>
+                        <td><code>fadeDuration</code></td>
+                        <td><code>number</code></td>
+                        <td><code>250</code></td>
+                        <td>Duration in milliseconds for fading out skeleton when calling <code>restore()</code>.</td>
+                    </tr>
+                    <tr>
+                        <td><code>className</code></td>
+                        <td><code>string</code></td>
+                        <td><code>''</code></td>
+                        <td>Custom CSS class string appended to top-level skeleton overlay container.</td>
+                    </tr>
+                    <tr>
+                        <td><code>ignoreHidden</code></td>
+                        <td><code>boolean</code></td>
+                        <td><code>true</code></td>
+                        <td>When <code>true</code>, elements with <code>display: none</code> or <code>visibility: hidden</code> are ignored.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 id="ui-controller" class="section-title">SkeletonController Interface</h2>
+        <p class="lede"><code>createSkeleton()</code> returns a controller object to manage teardown and state:</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method / Property</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>restore()</code></td>
+                        <td><code>() => void</code></td>
+                        <td>Fades out skeleton overlay over <code>fadeDuration</code> and restores original element visibility.</td>
+                    </tr>
+                    <tr>
+                        <td><code>skeletonElement</code></td>
+                        <td><code>HTMLElement</code></td>
+                        <td>Direct DOM reference to generated <code>.fluentez-skeleton-overlay</code> element.</td>
+                    </tr>
+                    <tr>
+                        <td><code>targetElement</code></td>
+                        <td><code>HTMLElement</code></td>
+                        <td>Direct DOM reference to target container element.</td>
+                    </tr>
+                    <tr>
+                        <td><code>isDestroyed</code></td>
+                        <td><code>boolean</code></td>
+                        <td>Read-only boolean property indicating whether skeleton has already been restored.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 id="ui-usage-vanilla" class="section-title">Vanilla JavaScript Examples</h2>
+
+        <h3>1. Basic Setup & Restoration</h3>
+        <pre class="code-block"><code><span class="keyword">import</span> { createSkeleton } <span class="keyword">from</span> <span class="string">'@fluentez/ui'</span>;
+
+<span class="keyword">const</span> userCard = document.<span class="function">querySelector</span>(<span class="string">'#user-card'</span>);
+
+<span class="comment">// 1. Create skeleton loader matching userCard UI</span>
+<span class="keyword">const</span> skeleton = <span class="function">createSkeleton</span>(userCard, {
+  animation: <span class="string">'shimmer'</span>,
+  theme: <span class="string">'auto'</span>,
+  borderRadius: <span class="string">'auto'</span>,
+});
+
+<span class="comment">// 2. Fetch data asynchronously and restore original UI</span>
+<span class="function">fetchUserProfile</span>().<span class="function">then</span>((data) =&gt; {
+  <span class="function">renderUserProfile</span>(data);
+  skeleton.<span class="function">restore</span>();
+});</code><button class="copy-button" aria-label="Copy Vanilla code">Copy</button></pre>
+
+        <h3>2. Custom Color Palette & Animation</h3>
+        <pre class="code-block"><code><span class="keyword">const</span> skeleton = <span class="function">createSkeleton</span>(<span class="string">'#product-card'</span>, {
+  animation: <span class="string">'wave'</span>,
+  theme: {
+    background: <span class="string">'#1e1e2e'</span>,
+    skeleton: <span class="string">'#313244'</span>,
+    highlight: <span class="string">'rgba(255, 255, 255, 0.12)'</span>,
+  },
+  borderRadius: <span class="number">12</span>,
+  fadeDuration: <span class="number">300</span>,
+});</code><button class="copy-button">Copy</button></pre>
+
+        <h3>3. Excluding & Keeping Elements</h3>
+        <pre class="code-block"><code><span class="keyword">const</span> skeleton = <span class="function">createSkeleton</span>(<span class="string">'#feed-item'</span>, {
+  <span class="comment">// Skip skeletonizing action buttons</span>
+  exclude: <span class="string">'.action-btn, button'</span>,
+  <span class="comment">// Keep brand icon visible as-is inside loading overlay</span>
+  keep: <span class="string">'.brand-logo'</span>,
+});</code><button class="copy-button">Copy</button></pre>
+
+        <h2 id="ui-usage-react" class="section-title">React API & Examples</h2>
+
+        <h3>Option 1: SkeletonContainer Component</h3>
+        <pre class="code-block"><code><span class="keyword">import</span> { SkeletonContainer } <span class="keyword">from</span> <span class="string">'@fluentez/ui/react'</span>;
+
+<span class="keyword">export function</span> <span class="function">UserProfileCard</span>({ isLoading, user }: { isLoading: <span class="type">boolean</span>; user?: <span class="type">User</span> }) {
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">SkeletonContainer</span>
+      loading={isLoading}
+      options={{
+        animation: <span class="string">'shimmer'</span>,
+        theme: <span class="string">'auto'</span>,
+        borderRadius: <span class="string">'auto'</span>,
+      }}
+    &gt;
+      &lt;<span class="tag">div</span> className=<span class="string">"profile-card"</span>&gt;
+        &lt;<span class="tag">img</span> src={user?.avatar} alt={user?.name} className=<span class="string">"avatar"</span> /&gt;
+        &lt;<span class="tag">h3</span>&gt;{user?.name}&lt;/<span class="tag">h3</span>&gt;
+        &lt;<span class="tag">p</span>&gt;{user?.bio}&lt;/<span class="tag">p</span>&gt;
+      &lt;/<span class="tag">div</span>&gt;
+    &lt;/<span class="tag">SkeletonContainer</span>&gt;
+  );
+}</code><button class="copy-button" aria-label="Copy React component code">Copy</button></pre>
+
+        <h3>Option 2: useSkeleton Hook</h3>
+        <pre class="code-block"><code><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> { useSkeleton } <span class="keyword">from</span> <span class="string">'@fluentez/ui/react'</span>;
+
+<span class="keyword">export function</span> <span class="function">ArticleFeed</span>({ isLoading }: { isLoading: <span class="type">boolean</span> }) {
+  <span class="keyword">const</span> containerRef = <span class="function">useSkeleton</span>&lt;<span class="type">HTMLDivElement</span>&gt;(isLoading, {
+    animation: <span class="string">'pulse'</span>,
+    fadeDuration: <span class="number">200</span>,
+  });
+
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">div</span> ref={containerRef} className=<span class="string">"feed-list"</span>&gt;
+      &lt;<span class="tag">article</span> className=<span class="string">"feed-item"</span>&gt;
+        &lt;<span class="tag">h2</span>&gt;Article Title Placeholder&lt;/<span class="tag">h2</span>&gt;
+        &lt;<span class="tag">p</span>&gt;Article body content paragraph placeholder text.&lt;/<span class="tag">p</span>&gt;
+      &lt;/<span class="tag">article</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}</code><button class="copy-button" aria-label="Copy React hook code">Copy</button></pre>
+
+        <h2 id="ui-data-attributes" class="section-title">HTML Data Attributes Control</h2>
+        <p class="lede">Control skeleton generation directly within HTML markup without writing JavaScript options:</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Target Element</th>
+                        <th>Effect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>data-skeleton-ignore</code></td>
+                        <td>Any HTML element</td>
+                        <td>Skips skeleton creation for this element and all its children. Element remains untouched.</td>
+                    </tr>
+                    <tr>
+                        <td><code>data-skeleton-keep</code></td>
+                        <td>Any HTML element</td>
+                        <td>Keeps element visible as-is inside the skeleton overlay (useful for brand logos or static icons).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <pre class="code-block"><code>&lt;<span class="tag">div</span> id=<span class="string">"card"</span>&gt;
+  &lt;<span class="tag">h2</span>&gt;User Profile Title&lt;/<span class="tag">h2</span>&gt;
+  
+  <span class="comment">&lt;!-- Icon remains visible untouched during loading --&gt;</span>
+  &lt;<span class="tag">svg</span> <span class="keyword">data-skeleton-keep</span> className=<span class="string">"logo-icon"</span>&gt;...&lt;/<span class="tag">svg</span>&gt;
+  
+  <span class="comment">&lt;!-- Action button is ignored completely --&gt;</span>
+  &lt;<span class="tag">button</span> <span class="keyword">data-skeleton-ignore</span>&gt;Action&lt;/<span class="tag">button</span>&gt;
+&lt;/<span class="tag">div</span>&gt;</code><button class="copy-button">Copy</button></pre>
+    </div>
+
+    <div class="page-nav">
+        <a class="page-nav-card" href="#/hooks/use-available-height">
+            <span class="page-nav-label">Previous page</span>
+            <span class="page-nav-title">← useAvailableHeight</span>
+        </a>
+        <a class="page-nav-card next" href="#/overview">
+            <span class="page-nav-label">Next page</span>
+            <span class="page-nav-title">Overview →</span>
+        </a>
+    </div>
+</section>

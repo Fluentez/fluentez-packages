@@ -1,0 +1,33 @@
+<section class="route-view active" data-route="design">
+    <div class="section">
+        <p class="eyebrow">Architecture</p>
+        <h1>Design Specifications</h1>
+        <p class="lede">Engineered to stay out of your way and deliver zero-flicker UI interactions.</p>
+
+        <div style="display: flex; flex-direction: column; gap: 18px; margin-top: 24px;">
+            <div style="padding: 22px; border: 1px solid var(--bun-border); border-radius: 10px; background: var(--bun-surface);">
+                <h3 style="margin: 0 0 8px; color: var(--bun-pink);">1. Layout Shift Prevention</h3>
+                <p style="margin: 0; color: var(--bun-text-secondary);">Uses <code>useLayoutEffect</code> to perform all DOM measurements and scroll coordinate adjustments synchronously before browser screen paint.</p>
+            </div>
+            <div style="padding: 22px; border: 1px solid var(--bun-border); border-radius: 10px; background: var(--bun-surface);">
+                <h3 style="margin: 0 0 8px; color: var(--bun-pink);">2. Debounced Storage Operations</h3>
+                <p style="margin: 0; color: var(--bun-text-secondary);">Scroll position writes to <code>sessionStorage</code> are debounced at 100ms to eliminate main thread blocking during active user scrolling.</p>
+            </div>
+            <div style="padding: 22px; border: 1px solid var(--bun-border); border-radius: 10px; background: var(--bun-surface);">
+                <h3 style="margin: 0 0 8px; color: var(--bun-pink);">3. O(1) ResizeObserver</h3>
+                <p style="margin: 0; color: var(--bun-text-secondary);"><code>useAvailableHeight</code> observes element and parent layout shifts with <code>ResizeObserver</code> and <code>requestAnimationFrame</code> without thread polling or loops.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-nav">
+        <a class="page-nav-card" href="#/requirements">
+            <span class="page-nav-label">Previous page</span>
+            <span class="page-nav-title">← Requirements</span>
+        </a>
+        <a class="page-nav-card next" href="#/ui-skeleton">
+            <span class="page-nav-label">Next page</span>
+            <span class="page-nav-title">@fluentez/ui Skeleton →</span>
+        </a>
+    </div>
+</section>

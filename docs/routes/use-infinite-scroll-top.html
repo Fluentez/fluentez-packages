@@ -1,0 +1,171 @@
+<section class="route-view active" data-route="hooks/use-infinite-scroll-top">
+    <div class="section">
+        <p class="eyebrow">Hook 01</p>
+        <h1>useInfiniteScrollTop</h1>
+        <p class="lede">
+            Prevents reverse scroll position jumps when prepending historical data batches to reverse timelines
+            like chat applications, messaging feeds, and historic log streams.
+        </p>
+
+        <div class="callout">
+            <span class="callout-icon">✦</span>
+            <p>Automatically calculates vertical layout offsets via <code>requestAnimationFrame</code> to keep
+                user scroll focus locked smoothly on active items without layout thrashing.</p>
+        </div>
+
+        <h2 id="useinfinitescrolltop-signature">Function Signature</h2>
+        <pre class="code-block"><code><span class="keyword">function</span> <span class="function">useInfiniteScrollTop</span>&lt;<span class="type">T extends { _id?: string | number; id?: string | number }</span>&gt;(
+  containerRef: <span class="type">RefObject&lt;HTMLElement | null&gt;</span>,
+  totalPages: <span class="type">number</span>,
+  page: <span class="type">number</span>,
+  setPage: <span class="type">Dispatch&lt;SetStateAction&lt;number&gt;&gt;</span>,
+  newData: <span class="type">T[]</span>,
+  shouldReverse?: <span class="type">boolean</span>
+): {
+  data: <span class="type">T[]</span>;
+  setData: <span class="type">Dispatch&lt;SetStateAction&lt;T[]&gt;&gt;</span>;
+};</code><button class="copy-button">Copy</button></pre>
+
+        <h2 id="useinfinitescrolltop-parameters">Parameters</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>containerRef</code></td>
+                        <td><code>RefObject&lt;HTMLElement | null&gt;</code></td>
+                        <td>Yes</td>
+                        <td>None</td>
+                        <td>React ref attached to the scrollable overflow container element.</td>
+                    </tr>
+                    <tr>
+                        <td><code>totalPages</code></td>
+                        <td><code>number</code></td>
+                        <td>Yes</td>
+                        <td>None</td>
+                        <td>Total available page count returned from the backend API.</td>
+                    </tr>
+                    <tr>
+                        <td><code>page</code></td>
+                        <td><code>number</code></td>
+                        <td>Yes</td>
+                        <td>None</td>
+                        <td>Current active pagination page index.</td>
+                    </tr>
+                    <tr>
+                        <td><code>setPage</code></td>
+                        <td><code>Dispatch&lt;SetStateAction&lt;number&gt;&gt;</code></td>
+                        <td>Yes</td>
+                        <td>None</td>
+                        <td>React state setter function to increment current page index.</td>
+                    </tr>
+                    <tr>
+                        <td><code>newData</code></td>
+                        <td><code>T[]</code></td>
+                        <td>Yes</td>
+                        <td>None</td>
+                        <td>Array of newly fetched data items from API responses. Deduplicated by <code>_id</code> or <code>id</code>.</td>
+                    </tr>
+                    <tr>
+                        <td><code>shouldReverse</code></td>
+                        <td><code>boolean</code></td>
+                        <td>No</td>
+                        <td><code>false</code></td>
+                        <td>Set <code>true</code> if prepended historic data array items require reversing.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 id="useinfinitescrolltop-returns">Return Values</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>data</code></td>
+                        <td><code>T[]</code></td>
+                        <td>Combined dataset array containing deduplicated prepended items.</td>
+                    </tr>
+                    <tr>
+                        <td><code>setData</code></td>
+                        <td><code>Dispatch&lt;SetStateAction&lt;T[]&gt;&gt;</code></td>
+                        <td>Direct state dispatcher for updating internal message/item state.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 id="useinfinitescrolltop-example">Production Usage Example: Chat Application</h2>
+        <pre class="code-block"><code><span class="keyword">import</span> React, { useState, useEffect, useRef } <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> { useInfiniteScrollTop } <span class="keyword">from</span> <span class="string">'@fluentez/hooks/use-infinite-scroll-top'</span>;
+
+<span class="keyword">interface</span> <span class="type">Message</span> {
+  _id: <span class="type">string</span>;
+  sender: <span class="type">string</span>;
+  text: <span class="type">string</span>;
+}
+
+<span class="keyword">export function</span> <span class="function">RealtimeChatFeed</span>() {
+  <span class="keyword">const</span> containerRef = <span class="function">useRef</span>&lt;<span class="type">HTMLDivElement | null</span>&gt;(<span class="keyword">null</span>);
+  <span class="keyword">const</span> [page, setPage] = <span class="function">useState</span>&lt;<span class="type">number</span>&gt;(<span class="number">1</span>);
+  <span class="keyword">const</span> [totalPages, setTotalPages] = <span class="function">useState</span>&lt;<span class="type">number</span>&gt;(<span class="number">1</span>);
+  <span class="keyword">const</span> [fetchedMessages, setFetchedMessages] = <span class="function">useState</span>&lt;<span class="type">Message[]</span>&gt;([]);
+
+  <span class="comment">// Fetch paginated historic messages</span>
+  <span class="function">useEffect</span>(() =&gt; {
+    <span class="function">fetch</span>(<span class="string">`/api/messages?page=${page}`</span>)
+      .<span class="function">then</span>((res) =&gt; res.<span class="function">json</span>())
+      .<span class="function">then</span>((res) =&gt; {
+        setFetchedMessages(res.messages);
+        setTotalPages(res.totalPages);
+      });
+  }, [page]);
+
+  <span class="comment">// Bind hook to handle scroll offset recalculation</span>
+  <span class="keyword">const</span> { data: messages } = <span class="function">useInfiniteScrollTop</span>&lt;<span class="type">Message</span>&gt;(
+    containerRef,
+    totalPages,
+    page,
+    setPage,
+    fetchedMessages,
+    <span class="boolean">true</span> <span class="comment">// Reverse array order for historic API responses</span>
+  );
+
+  <span class="keyword">return</span> (
+    &lt;<span class="tag">div</span> ref={containerRef} style={{ height: <span class="string">'500px'</span>, overflowY: <span class="string">'auto'</span> }}&gt;
+      {messages.map((msg) =&gt; (
+        &lt;<span class="tag">div</span> key={msg._id} className=<span class="string">"message-bubble"</span>&gt;
+          &lt;<span class="tag">strong</span>&gt;{msg.sender}:&lt;/<span class="tag">strong</span>&gt; {msg.text}
+        &lt;/<span class="tag">div</span>&gt;
+      ))}
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}</code><button class="copy-button">Copy</button></pre>
+    </div>
+
+    <div class="page-nav">
+        <a class="page-nav-card" href="#/imports">
+            <span class="page-nav-label">Previous page</span>
+            <span class="page-nav-title">← Importing Hooks</span>
+        </a>
+        <a class="page-nav-card next" href="#/hooks/use-scroll-restoration">
+            <span class="page-nav-label">Next page</span>
+            <span class="page-nav-title">useScrollRestoration →</span>
+        </a>
+    </div>
+</section>
