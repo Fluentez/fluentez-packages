@@ -96,13 +96,11 @@ body::before {
     width: 100vw;
     max-width: 1300px;
     height: 480px;
-    background: radial-gradient(
-        ellipse 75% 55% at 50% 0%,
-        rgba(168, 85, 247, 0.22) 0%,
-        rgba(236, 72, 153, 0.15) 45%,
-        rgba(255, 115, 168, 0.04) 75%,
-        transparent 100%
-    );
+    background: radial-gradient(ellipse 75% 55% at 50% 0%,
+            rgba(168, 85, 247, 0.22) 0%,
+            rgba(236, 72, 153, 0.15) 45%,
+            rgba(255, 115, 168, 0.04) 75%,
+            transparent 100%);
     pointer-events: none;
     z-index: 0;
     filter: blur(55px);
@@ -668,7 +666,7 @@ h3 {
 .code-block {
     position: relative;
     margin: 0 0 28px;
-    padding: 22px;
+    padding: 20px 82px 20px 20px;
     background: var(--bun-code-bg);
     color: var(--bun-code-text);
     border: 1px solid var(--bun-border-subtle);
@@ -700,6 +698,7 @@ h3 {
     font-size: 12px;
     font-weight: 500;
     cursor: pointer;
+    z-index: 2;
     transition: all 0.15s ease;
 }
 
@@ -938,13 +937,14 @@ td code {
 /* Footer */
 footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-top: 70px;
     padding: 28px 0;
     border-top: 1px solid var(--bun-border);
     color: var(--bun-text-muted);
     font-size: 13px;
+    text-align: center;
 }
 
 /* Search Modal (⌘K Search) */
@@ -1125,10 +1125,30 @@ footer {
     .hero-actions {
         flex-direction: column;
     }
+
+    .code-block {
+        padding: 44px 14px 14px 14px;
+        font-size: 12.5px;
+    }
+
+    .copy-button {
+        top: 8px;
+        right: 8px;
+        padding: 4px 9px;
+        font-size: 11px;
+    }
 }
 
 @keyframes skelPulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.4; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
